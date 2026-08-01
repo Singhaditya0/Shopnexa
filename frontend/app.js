@@ -6,7 +6,7 @@ async function loadWish() {
   if (!token) return new Set(JSON.parse(localStorage.getItem('sc_wish') || '[]'));
 
   try {
-    const res = await fetch("http://localhost:5000/api/wishlist", { headers: authHeader() });
+    const res = await fetch("/api/wishlist", { headers: authHeader() });
     const data = await res.json();
     return new Set(data.wishlist.map(p => p._id));
   } catch {

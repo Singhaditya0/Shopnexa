@@ -1,5 +1,4 @@
-const API = "http://localhost:5000/api";
-
+const API_BASE = '/api';
 if (!getToken()) {
   alert("Please login as admin first");
   window.location.href = "login.html";

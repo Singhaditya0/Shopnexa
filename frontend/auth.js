@@ -1,5 +1,5 @@
 // auth.js — har page pe include karo, login/register/logout ka common logic
-const AUTH_API = "http://localhost:5000/api/auth";
+const AUTH_API = "/api/auth";
 
 // window. lagane se ye functions globally available ho jayenge
 window.getToken = function() {
