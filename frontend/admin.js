@@ -1,4 +1,4 @@
-const API_BASE = '/api';
+const API = "https://shopnexa-backend.onrender.com/api";
 if (!getToken()) {
   alert("Please login as admin first");
   window.location.href = "login.html";
