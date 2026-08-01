@@ -1,5 +1,5 @@
 // catalog.js
-const API_BASE = '/api';
+const API_BASE = 'https://shopnexa-backend.onrender.com/api';
 
 export async function loadCatalog() {
   try {
