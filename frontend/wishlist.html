@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Wishlist — Shopnexa</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+.wish-wrap { max-width: 1200px; margin: 0 auto; padding: 30px 24px 60px; }
+.wish-header { margin-bottom: 24px; }
+.wish-header h1 { font-family: var(--font-display); font-size: 26px; font-weight: 700; }
+.wish-header p { color: var(--text-muted); font-size: 13.5px; margin-top: 4px; }
+.wish-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+.wish-card {
+  background: var(--surface); border: 1px solid var(--border-mid);
+  border-radius: var(--radius-lg); overflow: hidden; transition: all .18s;
+}
+.wish-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.wish-thumb {
+  height: 140px; display: flex; align-items: center; justify-content: center;
+  font-size: 48px; position: relative; cursor: pointer;
+}
+.wish-remove {
+  position: absolute; top: 10px; right: 10px;
+  width: 32px; height: 32px; border-radius: 8px;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(6px);
+  border: none; color: #fff; cursor: pointer; font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+}
+.wish-remove:hover { background: var(--signal); }
+.wish-body { padding: 14px; }
+.wish-name { font-family: var(--font-display); font-weight: 600; font-size: 14px; margin-bottom: 8px; cursor: pointer; }
+.wish-price { font-family: var(--font-mono); font-weight: 700; color: var(--accent); font-size: 16px; }
+.wish-empty {
+  text-align: center; padding: 60px 20px; color: var(--text-muted);
+}
+.wish-empty .e-glyph { font-size: 40px; margin-bottom: 12px; }
+.wish-empty a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><span class="dot"></span>Shopnexa</a>
+    <nav class="links">
+      <a href="index.html#categories">Categories</a>
+      <a href="index.html#deals">Deals</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <span id="authSlot" style="display:inline-flex;align-items:center;gap:6px;"></span>
+      <button class="icon-btn" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </div>
+</header>
+
+<div class="wish-wrap">
+  <div class="wish-header">
+    <h1>My Wishlist</h1>
+    <p id="wishSubtitle">Loading...</p>
+  </div>
+  <div class="wish-grid" id="wishGrid"></div>
+</div>
+
+<script src="auth.js"></script>
+<script src="toast.js"></script>
+<script>
+const API = "http://localhost:5000/api";
+
+if (!getToken()) {
+  window.location.href = "login.html";
+}
+
+async function loadWishlistPage() {
+  try {
+    const res = await fetch(`${API}/wishlist`, { headers: authHeader() });
+    const data = await res.json();
+    renderWishlist(data.wishlist || []);
+  } catch (err) {
+    document.getElementById('wishSubtitle').textContent = "Couldn't load wishlist.";
+  }
+}
+
+function renderWishlist(items) {
+  const grid = document.getElementById('wishGrid');
+  const subtitle = document.getElementById('wishSubtitle');
+
+  if (items.length === 0) {
+    subtitle.textContent = "Your wishlist is empty.";
+    grid.innerHTML = `
+      <div class="wish-empty" style="grid-column:1/-1;">
+        <div class="e-glyph">♡</div>
+        No items yet — <a href="index.html">browse products</a> and tap the heart icon to save them here.
+      </div>`;
+    return;
+  }
+
+  subtitle.textContent = `${items.length} item${items.length > 1 ? 's' : ''} saved`;
+
+  grid.innerHTML = items.map(p => `
+    <div class="wish-card">
+      <div class="wish-thumb" style="background:linear-gradient(135deg,#1a1d29,#2a2f42);" onclick="location.href='product.html?id=${p._id}'">
+        🛒
+        <button class="wish-remove" onclick="event.stopPropagation(); removeFromWishlist('${p._id}')">✕</button>
+      </div>
+      <div class="wish-body">
+        <div class="wish-name" onclick="location.href='product.html?id=${p._id}'">${p.name}</div>
+        <div class="wish-price">₹${p.price}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function removeFromWishlist(id) {
+  await fetch(`${API}/wishlist/${id}`, { method: "DELETE", headers: authHeader() });
+  showToast("Removed from wishlist");
+  loadWishlistPage();
+}
+window.removeFromWishlist = removeFromWishlist;
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  document.documentElement.classList.toggle('light');
+  const isLight = document.documentElement.classList.contains('light');
+  document.getElementById('themeToggle').textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('sc_theme', isLight ? 'light' : 'dark');
+});
+if (localStorage.getItem('sc_theme') === 'light') {
+  document.documentElement.classList.add('light');
+  document.getElementById('themeToggle').textContent = '☀️';
+}
+
+loadWishlistPage();
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# NOTE: CSS/JS/service-worker used to be Disallow'd here. Google renders
+# pages (not just raw HTML) to judge quality/SEO, so blocking these made
+# Googlebot see a broken, unstyled page and could hurt ranking. Removed.
+
+# Sitemap location
+Sitemap: https://www.yourdomain.com/sitemap.xml

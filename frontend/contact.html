@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Shopnexa</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Shopnexa - Discover Smarter. Shop Better.">
+  <meta property="og:description" content="Your smart shopping guide — find the best deals before you buy.">
+  <meta property="og:image" content="https://www.yourdomain.com/og-image.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.yourdomain.com/">
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="logo"><span class="dot"></span> Shopnexa</div>
+      <nav class="links">
+        <a href="index.html">Home</a>
+        <a href="index.html#deals">Products</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <h1>Get in <span>Touch</span></h1>
+        <p class="sub">Questions, feedback, or a partnership idea? We'd love to hear from you.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact details -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Reach Us Directly</h2>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-card">
+          <span class="glyph">✉️</span>
+          <div class="title">General Support</div>
+          <div class="count"><a href="mailto:support@yourdomain.com">support@yourdomain.com</a></div>
+        </div>
+        <div class="cat-card">
+          <span class="glyph">🤝</span>
+          <div class="title">Partnerships & Affiliates</div>
+          <div class="count"><a href="mailto:partners@yourdomain.com">partners@yourdomain.com</a></div>
+        </div>
+        <div class="cat-card">
+          <span class="glyph">⏱️</span>
+          <div class="title">Response Time</div>
+          <div class="count">We typically reply within 1–2 business days</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact form -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Send Us a Message</h2>
+      </div>
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('Thanks for reaching out! This demo form isn\'t connected to a backend yet — please email us directly at support@yourdomain.com in the meantime.');">
+        <div class="form-row">
+          <label for="cName">Name</label>
+          <input type="text" id="cName" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-row">
+          <label for="cEmail">Email</label>
+          <input type="email" id="cEmail" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-row">
+          <label for="cMessage">Message</label>
+          <textarea id="cMessage" name="message" rows="5" placeholder="How can we help?" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p class="disclosure">© 2026 Shopnexa Marketplace. All rights reserved.</p>
+  </footer>
+
+  <style>
+    .contact-form { max-width: 520px; display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: flex; flex-direction: column; gap: 6px; }
+    .form-row label { font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); }
+    .form-row input, .form-row textarea {
+      background: var(--surface-2); border: 1px solid var(--border-mid);
+      border-radius: 10px; padding: 11px 14px; color: var(--text);
+      font-family: var(--font-body); font-size: 14px; resize: vertical;
+    }
+    .form-row input:focus, .form-row textarea:focus {
+      outline: none; border-color: var(--accent);
+    }
+    .contact-form .btn { align-self: flex-start; }
+  </style>
+</body>
+</html>

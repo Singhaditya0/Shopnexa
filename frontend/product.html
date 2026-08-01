@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta property="og:title" content="Shopnexa - Discover Smarter. Shop Better.">
+<meta property="og:description" content="Your smart shopping guide — find the best deals before you buy.">
+<meta property="og:image" content="https://www.yourdomain.com/og-image.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.yourdomain.com/">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product — Shopnexa</title>
+<meta name="description" content="Compare prices across Amazon, Flipkart and more sellers on Shopnexa.">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0A0C12">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── PRODUCT PAGE EXTRAS ────────────────────────────────── */
+.pd-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12.5px; color: var(--text-muted); padding: 20px 0 0;
+  font-family: var(--font-mono);
+}
+.breadcrumb a { color: var(--text-muted); transition: color .15s; }
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb span { color: var(--border-hi); }
+
+/* Hero layout */
+.pd-hero {
+  display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px;
+  padding: 28px 0 52px; align-items: start;
+}
+@media(max-width: 860px) { .pd-hero { grid-template-columns: 1fr; gap: 28px; } }
+
+/* Product visual */
+.pd-visual {
+  background: var(--surface); border: 1px solid var(--border-mid);
+  border-radius: var(--radius-xl); overflow: hidden; position: sticky; top: 82px;
+}
+.pd-emoji-stage {
+  height: 280px; display: flex; align-items: center; justify-content: center;
+  font-size: 100px; position: relative;
+}
+.pd-tag {
+  position: absolute; top: 16px; left: 16px;
+  background: var(--signal); color: #fff;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+  padding: 5px 10px; border-radius: 7px;
+  box-shadow: 0 4px 12px rgba(255,107,91,0.4);
+}
+.pd-wish-btn {
+  position: absolute; top: 14px; right: 14px;
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(0,0,0,0.45); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 18px; transition: all .15s;
+}
+.pd-wish-btn:hover { transform: scale(1.08); border-color: var(--signal); }
+.pd-wish-btn.active { background: var(--signal); border-color: var(--signal); }
+
+.pd-thumbnails {
+  display: flex; gap: 8px; padding: 12px 16px 16px;
+  border-top: 1px solid var(--border); overflow-x: auto;
+}
+.pd-thumb-dot {
+  width: 44px; height: 44px; border-radius: 8px;
+  background: var(--surface-2); border: 1px solid var(--border-mid);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; cursor: pointer; flex-shrink: 0;
+  transition: border-color .15s;
+}
+.pd-thumb-dot.active { border-color: var(--accent); background: var(--accent-dim); }
+
+/* Product info */
+.pd-info { padding-top: 4px; }
+.pd-cat-label {
+  font-family: var(--font-mono); font-size: 11px; color: var(--accent);
+  text-transform: uppercase; letter-spacing: .07em; margin-bottom: 10px;
+}
+.pd-name {
+  font-family: var(--font-display); font-size: 28px; font-weight: 700;
+  line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 14px;
+}
+@media(max-width:640px) { .pd-name { font-size: 22px; } }
+
+.pd-rating-row {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
+}
+.pd-stars { color: var(--gold); font-size: 15px; letter-spacing: 1px; }
+.pd-rating-num { font-family: var(--font-mono); font-weight: 700; font-size: 15px; }
+.pd-reviews { font-size: 13px; color: var(--text-muted); }
+.pd-pill {
+  font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+  padding: 3px 9px; border-radius: 99px; border: 1px solid;
+}
+.pd-pill.best { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+.pd-pill.deal { color: var(--signal); border-color: var(--signal); background: var(--signal-dim); }
+
+/* Price block */
+.pd-price-block {
+  background: var(--surface); border: 1px solid var(--border-mid);
+  border-radius: var(--radius-lg); padding: 20px; margin-bottom: 20px;
+}
+.pd-price-head {
+  display: flex; align-items: flex-end; gap: 12px; margin-bottom: 6px; flex-wrap: wrap;
+}
+.pd-price-now {
+  font-family: var(--font-mono); font-size: 34px; font-weight: 700; color: var(--accent);
+  line-height: 1;
+}
+.pd-price-was {
+  font-family: var(--font-mono); font-size: 17px; color: var(--text-muted);
+  text-decoration: line-through;
+}
+.pd-price-save {
+  font-family: var(--font-mono); font-size: 12px; color: var(--signal);
+  background: var(--signal-dim); border: 1px solid rgba(255,107,91,0.2);
+  padding: 3px 8px; border-radius: 6px; font-weight: 700;
+}
+.pd-seller-line {
+  font-size: 12.5px; color: var(--text-muted); margin-top: 6px;
+}
+.pd-seller-line b { color: var(--text); }
+
+/* CTA buttons */
+.pd-cta { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.pd-buy-btn {
+  width: 100%; padding: 14px; border-radius: 10px; border: none;
+  font-family: var(--font-body); font-weight: 700; font-size: 15px;
+  cursor: pointer; transition: all .18s; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.pd-buy-btn.primary {
+  background: var(--accent); color: #050A0E;
+  box-shadow: 0 0 24px var(--accent-glow);
+}
+.pd-buy-btn.primary:hover { background: var(--accent-2); box-shadow: 0 0 36px var(--accent-glow); transform: translateY(-2px); }
+.pd-buy-btn.secondary {
+  background: var(--surface-2); color: var(--text);
+  border: 1px solid var(--border-mid);
+}
+.pd-buy-btn.secondary:hover { border-color: var(--accent); color: var(--accent); }
+.pd-buy-btn:active { transform: scale(0.98) !important; }
+
+/* Trust badges */
+.trust-badges {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+}
+.trust-badge {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11.5px; color: var(--text-muted); background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 7px; padding: 5px 10px;
+}
+
+/* ── PRICE COMPARISON TABLE ─────────────────────────────── */
+.section-title {
+  font-family: var(--font-display); font-size: 19px; font-weight: 700;
+  letter-spacing: -0.01em; margin-bottom: 16px;
+}
+.offers-table { width: 100%; border-collapse: collapse; }
+.offers-table th {
+  font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--text-muted); padding: 10px 14px;
+  text-align: left; border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.offers-table th:first-child { border-radius: 10px 0 0 0; }
+.offers-table th:last-child  { border-radius: 0 10px 0 0; }
+.offers-table td {
+  padding: 14px 14px; border-bottom: 1px solid var(--border);
+  font-size: 13.5px; vertical-align: middle;
+}
+.offers-table tr:last-child td { border-bottom: none; }
+.offers-table tr { transition: background .12s; }
+.offers-table tr:not(.header-row):hover td { background: var(--surface-2); }
+.offers-table tr.best-offer td { background: var(--accent-dim); }
+.offers-table tr.best-offer:hover td { background: rgba(94,234,207,0.14); }
+
+.seller-logo {
+  display: inline-flex; align-items: center; gap: 8px; font-weight: 600;
+}
+.seller-icon {
+  width: 28px; height: 28px; border-radius: 7px; background: var(--surface-3);
+  border: 1px solid var(--border-mid); display: flex; align-items: center;
+  justify-content: center; font-size: 13px;
+}
+.offer-price {
+  font-family: var(--font-mono); font-weight: 700; font-size: 16px;
+}
+.offer-price.best { color: var(--accent); }
+.best-badge {
+  display: inline-block; background: var(--accent); color: #050A0E;
+  font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+  padding: 2px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle;
+}
+.offer-savings { font-size: 11px; color: var(--signal); font-family: var(--font-mono); }
+.go-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--surface-3); border: 1px solid var(--border-mid);
+  color: var(--text-soft); font-family: var(--font-body); font-weight: 600;
+  font-size: 12px; padding: 7px 13px; border-radius: 7px; cursor: pointer;
+  transition: all .15s; white-space: nowrap;
+  text-decoration: none;
+}
+.go-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.go-btn.best-go {
+  background: var(--accent); color: #050A0E; border-color: var(--accent);
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+.go-btn.best-go:hover { background: var(--accent-2); }
+
+/* Redirect overlay */
+.redirect-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px); z-index: 200;
+  display: none; align-items: center; justify-content: center;
+}
+.redirect-overlay.show { display: flex; }
+.redirect-box {
+  background: var(--surface); border: 1px solid var(--border-mid);
+  border-radius: var(--radius-xl); padding: 36px 40px; text-align: center;
+  max-width: 380px; width: 100%;
+  animation: modal-in .2s cubic-bezier(0.4,0,0.2,1);
+}
+.redirect-spinner {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 3px solid var(--border-mid); border-top-color: var(--accent);
+  animation: spin .7s linear infinite; margin: 0 auto 18px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.redirect-box h3 {
+  font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-bottom: 8px;
+}
+.redirect-box p { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; }
+.redirect-box .cancel-link {
+  display: inline-block; margin-top: 18px; font-size: 12.5px;
+  color: var(--text-muted); cursor: pointer; text-decoration: underline;
+}
+.redirect-box .cancel-link:hover { color: var(--text); }
+
+/* ── SPECS ───────────────────────────────────────────────── */
+.specs-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;
+}
+.spec-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 16px;
+}
+.spec-key {
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px;
+}
+.spec-val {
+  font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--text);
+}
+
+/* ── TABS ────────────────────────────────────────────────── */
+.pd-tabs {
+  display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 28px;
+}
+.pd-tab {
+  padding: 11px 20px; font-family: var(--font-body); font-weight: 600; font-size: 13.5px;
+  color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all .15s; margin-bottom: -1px;
+}
+.pd-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.pd-tab:hover:not(.active) { color: var(--text); }
+.pd-tab-panel { display: none; }
+.pd-tab-panel.active { display: block; animation: card-in .22s ease both; }
+
+/* ── RELATED ─────────────────────────────────────────────── */
+.related-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px;
+}
+.related-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden; cursor: pointer;
+  transition: all .18s;
+}
+.related-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: var(--card-hover); }
+.related-thumb {
+  height: 100px; display: flex; align-items: center; justify-content: center;
+  font-size: 36px; position: relative;
+}
+.related-body { padding: 12px 14px; }
+.related-name {
+  font-family: var(--font-display); font-size: 13px; font-weight: 600;
+  margin-bottom: 6px; line-height: 1.3;
+}
+.related-price { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--accent); }
+.related-was { font-size: 11px; color: var(--text-muted); text-decoration: line-through; margin-left: 5px; }
+
+/* ── BACK LINK ───────────────────────────────────────────── */
+.back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-muted); font-size: 13px; font-weight: 500;
+  padding: 8px 0; cursor: pointer; transition: color .15s; border: none; background: none;
+}
+.back-btn:hover { color: var(--accent); }
+
+/* Bottom sections */
+.pd-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin: 48px 0; }
+@media(max-width: 720px) { .pd-bottom { grid-template-columns: 1fr; } }
+
+.info-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px;
+}
+.info-card h4 {
+  font-family: var(--font-display); font-size: 14px; font-weight: 700;
+  margin-bottom: 12px; color: var(--text);
+}
+.info-row {
+  display: flex; gap: 8px; margin-bottom: 10px; font-size: 13px; color: var(--text-soft);
+  align-items: flex-start;
+}
+.info-row span:first-child { font-size: 16px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><span class="dot"></span>Shopnexa</a>
+    <nav class="links">
+      <a href="index.html#categories">Categories</a>
+      <a href="index.html#deals">Deals</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <span id="authSlot" style="display:inline-flex;align-items:center;gap:6px;"></span>
+      <button class="icon-btn" id="themeToggle" title="Toggle theme">🌙</button>
+    <a class="icon-btn" href="wishlist.html" title="Wishlist" style="text-decoration:none;">♡
+  <span class="badge-count" id="wishCount" style="display:none">0</span>
+</a>
+    </div>
+  </div>
+</header>
+
+<!-- REDIRECT OVERLAY -->
+<div class="redirect-overlay" id="redirectOverlay">
+  <div class="redirect-box">
+    <div class="redirect-spinner"></div>
+    <h3 id="redirectTitle">Taking you there…</h3>
+    <p id="redirectMsg">Opening <b id="redirectSeller"></b> in a new tab. You'll be there in a moment.</p>
+    <span class="cancel-link" onclick="cancelRedirect()">Cancel</span>
+  </div>
+</div>
+
+<div class="pd-wrap">
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <a href="index.html#deals" id="bcCat">—</a>
+    <span>/</span>
+    <span id="bcName" style="color:var(--text-soft);">Loading…</span>
+  </div>
+
+  <!-- HERO -->
+  <div class="pd-hero">
+    <!-- Left: visual -->
+    <div class="pd-visual">
+      <div class="pd-emoji-stage" id="emojiStage" style="background:linear-gradient(135deg,#5EEAD4,#171A23)">
+        <span id="prodGlyph" style="position:relative;z-index:1;">🎁</span>
+        <span class="pd-tag" id="prodTag"></span>
+        <div class="pd-wish-btn" id="wishBtn" onclick="toggleWish()">♡</div>
+      </div>
+      <div class="pd-thumbnails" id="thumbnails"></div>
+    </div>
+
+    <!-- Right: info -->
+    <div class="pd-info">
+      <div class="pd-cat-label" id="prodCat"></div>
+      <h1 class="pd-name" id="prodName">Loading…</h1>
+
+      <div class="pd-rating-row">
+        <div class="pd-stars" id="prodStars"></div>
+        <span class="pd-rating-num" id="prodRatingNum"></span>
+        <span class="pd-reviews" id="prodReviews"></span>
+        <span class="pd-pill best" id="prodPillBest" style="display:none">Best Price Found</span>
+        <span class="pd-pill deal" id="prodTag2"></span>
+      </div>
+
+      <div class="pd-price-block">
+        <div class="pd-price-head">
+          <span class="pd-price-now" id="pdPriceNow">—</span>
+          <span class="pd-price-was" id="pdPriceWas"></span>
+          <span class="pd-price-save" id="pdPriceSave"></span>
+        </div>
+        <div class="pd-seller-line">Best price at <b id="pdSellerName">—</b></div>
+      </div>
+
+      <div class="pd-cta">
+        <button class="pd-buy-btn primary" id="mainBuyBtn">Buy on — →</button>
+        <button class="pd-buy-btn secondary" onclick="document.getElementById('offersSection').scrollIntoView({behavior:'smooth'})">
+          🔍 Compare all prices below
+        </button>
+      </div>
+
+      <div class="trust-badges">
+        <div class="trust-badge">🔒 Secure redirect</div>
+        <div class="trust-badge">💳 No extra fees</div>
+        <div class="trust-badge">🌍 Ships worldwide</div>
+        <div class="trust-badge">🔄 Easy returns</div>
+      </div>
+
+      <p style="font-size:11.5px; color:var(--text-muted); line-height:1.6;">
+        Shopnexa compares prices across multiple sellers. We may earn a small affiliate commission — at no extra cost to you.
+      </p>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="pd-tabs">
+    <div class="pd-tab active" onclick="switchTab('offers')">💰 Price Comparison</div>
+    <div class="pd-tab" onclick="switchTab('specs')">📋 Specifications</div>
+    <div class="pd-tab" onclick="switchTab('about')">ℹ️ About</div>
+  </div>
+
+  <!-- TAB: OFFERS -->
+  <div class="pd-tab-panel active" id="tab-offers">
+    <div id="offersSection">
+      <h2 class="section-title">Price comparison across sellers</h2>
+      <div style="overflow-x:auto; border-radius:var(--radius-lg); border:1px solid var(--border);">
+        <table class="offers-table" id="offersTable">
+          <thead>
+            <tr class="header-row">
+              <th>Marketplace</th>
+              <th>Price</th>
+              <th>Savings</th>
+              <th>Shipping</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="offersTbody"></tbody>
+        </table>
+      </div>
+      <p style="font-size:11.5px; color:var(--text-muted); margin-top:12px; line-height:1.6;">
+        ⚠️ Prices shown are approximate and may vary. Always confirm the final price on the seller's site before checkout.
+      </p>
+    </div>
+  </div>
+
+  <!-- TAB: SPECS -->
+  <div class="pd-tab-panel" id="tab-specs">
+    <h2 class="section-title">Product specifications</h2>
+    <div class="specs-grid" id="specsGrid"></div>
+  </div>
+
+  <!-- TAB: ABOUT -->
+  <div class="pd-tab-panel" id="tab-about">
+    <h2 class="section-title">About this product</h2>
+    <div class="pd-bottom">
+      <div class="info-card">
+        <h4>🛒 How Shopnexa works</h4>
+        <div class="info-row"><span>1️⃣</span><span>We track prices across trusted global marketplaces daily.</span></div>
+        <div class="info-row"><span>2️⃣</span><span>Click "Buy on [seller]" — we redirect you to the seller's live listing.</span></div>
+        <div class="info-row"><span>3️⃣</span><span>Complete your purchase directly with the seller. We never handle payments.</span></div>
+        <div class="info-row"><span>💡</span><span>Prices and availability may change. Always verify on the seller's site.</span></div>
+      </div>
+      <div class="info-card">
+        <h4>⚖️ Affiliate disclosure</h4>
+        <div class="info-row"><span>🔗</span><span>Some links on Shopnexa are affiliate links — if you buy through them, we may earn a small commission.</span></div>
+        <div class="info-row"><span>💸</span><span>This is at no extra cost to you. The price you see is the seller's price.</span></div>
+        <div class="info-row"><span>🎯</span><span>Our recommendations are based on price, rating, and availability — not commission rates.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding: 0 0 40px;">
+  <h2 class="section-title">Reviews</h2>
+  <div id="reviewForm" style="margin-bottom:20px;"></div>
+  <div id="reviewsList"></div>
+</section>
+
+<section style="padding: 0 0 40px;">
+  <h2 class="section-title">Set a Price Alert 🔔</h2>
+  <div class="pd-price-block" style="max-width:400px;">
+    <input type="number" id="alertPrice" placeholder="Target price (₹)" style="width:100%;padding:10px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border-mid);color:var(--text);margin-bottom:10px;box-sizing:border-box;">
+    <button class="pd-buy-btn primary" id="setAlertBtn" style="width:auto;padding:10px 18px;">Notify Me</button>
+    <p id="alertMsg" style="font-size:12px;margin-top:8px;"></p>
+  </div>
+</section>
+
+  <!-- RELATED PRODUCTS -->
+  <section style="padding: 0 0 60px;">
+    <h2 class="section-title" style="margin-bottom:18px;">Related products</h2>
+    <div class="related-grid" id="relatedGrid"></div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="pd-wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="logo" style="margin-bottom:10px;"><span class="dot"></span>Shopnexa</div>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.6; max-width:280px;">Independent price comparison. We track sellers so you don't have to.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Categories</h4>
+        <a href="index.html#deals">Fashion</a>
+        <a href="index.html#deals">Beauty</a>
+        <a href="index.html#deals">Electronics</a>
+        <a href="index.html#deals">Kids</a>
+        <a href="index.html#deals">Pets</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms</a>
+        <a href="affiliate-disclosure.html">Affiliate Disclosure</a>
+      </div>
+    </div>
+    <div class="disclosure">Shopnexa is a demo interface. Affiliate links may earn us a commission at no extra cost to you.</div>
+  </div>
+</footer>
+
+<script type="module" src="catalog.js"></script>
+<script src="auth.js"></script>
+<script src="currency.js"></script>
+<script src="toast.js"></script>
+<script type="module">
+  const API = "http://localhost:5000/api";
+
+async function loadReviews() {
+  const res = await fetch(`${API}/products/${currentProductId}/reviews`);
+  const data = await res.json();
+  renderReviews(data.reviews);
+}
+
+function renderReviews(reviews) {
+  document.getElementById("reviewsList").innerHTML = reviews.length
+    ? reviews.map(r => `
+      <div style="border-bottom:1px solid var(--border);padding:12px 0;">
+        <b>${r.user?.name || "User"}</b> — ${renderStars(r.rating)}
+        <p style="font-size:13px;color:var(--text-soft);margin-top:4px;">${r.comment || ""}</p>
+      </div>
+    `).join("")
+    : `<p style="color:var(--text-muted);font-size:13px;">No reviews yet — be the first!</p>`;
+
+  const token = getToken();
+  document.getElementById("reviewForm").innerHTML = token
+    ? `
+      <select id="ratingSelect" style="padding:8px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border-mid);color:var(--text);margin-right:8px;">
+        <option value="5">★★★★★</option>
+        <option value="4">★★★★☆</option>
+        <option value="3">★★★☆☆</option>
+        <option value="2">★★☆☆☆</option>
+        <option value="1">★☆☆☆☆</option>
+      </select>
+      <input type="text" id="commentInput" placeholder="Write a review..." style="padding:8px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border-mid);color:var(--text);width:250px;">
+      <button class="pd-buy-btn primary" id="submitReviewBtn" style="width:auto;padding:8px 16px;display:inline-flex;">Submit</button>
+    `
+    : `<a href="login.html" style="font-size:13px;color:var(--accent);">Login to write a review</a>`;
+
+  if (token) {
+    document.getElementById("submitReviewBtn").addEventListener("click", async () => {
+  const btn = document.getElementById("submitReviewBtn");
+  btn.disabled = true;
+  btn.textContent = "Submitting...";
+
+  const rating = document.getElementById("ratingSelect").value;
+  const comment = document.getElementById("commentInput").value;
+  const res = await fetch(`${API}/products/${currentProductId}/reviews`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...authHeader() },
+    body: JSON.stringify({ rating, comment }),
+  });
+  const data = await res.json();
+
+  btn.disabled = false;
+  btn.textContent = "Submit";
+
+  if (data.success) { loadReviews(); showToast("Review submitted!"); }
+  else showToast(data.message, "error");
+});
+  }
+}
+
+function setupAlertButton() {
+  document.getElementById("setAlertBtn").addEventListener("click", async () => {
+    const token = getToken();
+    if (!token) { window.location.href = "login.html"; return; }
+
+    const targetPrice = document.getElementById("alertPrice").value;
+    const msg = document.getElementById("alertMsg");
+    if (!targetPrice) { msg.textContent = "Enter a price first"; msg.style.color = "var(--signal)"; return; }
+
+    const btn = document.getElementById("setAlertBtn");
+    btn.disabled = true;
+    btn.textContent = "Setting...";
+
+    const res = await fetch(`${API}/alerts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeader() },
+      body: JSON.stringify({ productId: currentProductId, targetPrice }),
+    });
+    const data = await res.json();
+
+    btn.disabled = false;
+    btn.textContent = "Notify Me";
+
+    msg.textContent = data.success ? "Alert set! We'll track this product." : data.message;
+    msg.style.color = data.success ? "var(--accent)" : "var(--signal)";
+  });
+}
+import { loadCatalog } from './catalog.js';
+
+/* ── CATEGORY GROUPS (same list as app.js — kept in sync manually) ── */
+const categoryGroups = [
+  { group: 'Fashion', open: true, items: [
+    { key: 'fashion', icon: '👗', label: 'Fashion' }
+  ]},
+  { group: 'Beauty & Personal Care', open: true, items: [
+    { key: 'beauty', icon: '💄', label: 'Beauty & Personal Care' }
+  ]},
+  { group: 'Electronics & Home', open: true, items: [
+    { key: 'electronics', icon: '💻', label: 'Electronics & Home' }
+  ]},
+  { group: 'Kids', open: true, items: [
+    { key: 'kids', icon: '🧸', label: 'Kids' }
+  ]},
+  { group: 'Pets', open: true, items: [
+    { key: 'pets', icon: '🐾', label: 'Pets' }
+  ]}
+];
+
+let products = [];
+
+/* ── CURRENCY ──────────────────────────────────────────── */
+async function initCurrency() {
+  await Promise.allSettled([fetchLiveRates(), detectCountryCurrency()]);
+}
+
+/* ── SELLER ICONS ──────────────────────────────────────── */
+const SELLER_ICONS = {
+  'Amazon':     '🟠', 'AliExpress': '🔴', 'Flipkart':   '🔵',
+  'Shein':      '⚫', 'DHGate':     '🟡', 'Banggood':   '🟢',
+  'Alibaba':    '🟠', 'Geekbuying': '🔵',
+};
+const SHIP_TIMES = {
+  'Amazon': '2–5 days', 'AliExpress': '7–20 days', 'Flipkart': '2–4 days',
+  'Shein': '7–14 days', 'DHGate': '10–25 days', 'Banggood': '7–15 days',
+  'Alibaba': '10–30 days', 'Geekbuying': '7–18 days',
+};
+
+/* ── WISHLIST ──────────────────────────────────────────── */
+let wishlist = new Set();
+let currentProductId = null;
+
+function saveWish() { localStorage.setItem('sc_wish', JSON.stringify([...wishlist])); }
+
+async function toggleWish() {
+  if (!currentProductId) return;
+  const token = getToken();
+  if (!token) { window.location.href = "login.html"; return; }
+
+  const btn = document.getElementById('wishBtn');
+  const method = wishlist.has(currentProductId) ? "DELETE" : "POST";
+
+  if (wishlist.has(currentProductId)) {
+    wishlist.delete(currentProductId);
+    btn.textContent = '♡'; btn.classList.remove('active');
+  } else {
+    wishlist.add(currentProductId);
+    btn.textContent = '♥'; btn.classList.add('active');
+  }
+  updateWishBadge();
+
+  await fetch(`http://localhost:5000/api/wishlist/${currentProductId}`, { method, headers: authHeader() });
+}
+window.toggleWish = toggleWish;
+function updateWishBadge() {
+  const wc = document.getElementById('wishCount');
+  wc.textContent = wishlist.size;
+  wc.style.display = wishlist.size ? 'flex' : 'none';
+}
+// toggleWish onclick="toggleWish()" HTML mein hai, module scripts mein global scope
+// se bahar hota hai isliye window pe attach karna zaroori hai:
+window.toggleWish = toggleWish;
+
+/* ── AFFILIATE REDIRECT ────────────────────────────────── */
+let redirectTimer = null;
+
+function doRedirect(url, sellerName) {
+  document.getElementById('redirectSeller').textContent = sellerName;
+  document.getElementById('redirectTitle').textContent = `Taking you to ${sellerName}…`;
+  document.getElementById('redirectOverlay').classList.add('show');
+  redirectTimer = setTimeout(() => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+    document.getElementById('redirectOverlay').classList.remove('show');
+  }, 1800);
+}
+function cancelRedirect() {
+  clearTimeout(redirectTimer);
+  document.getElementById('redirectOverlay').classList.remove('show');
+}
+window.doRedirect = doRedirect;
+window.cancelRedirect = cancelRedirect;
+
+/* ── TABS ──────────────────────────────────────────────── */
+function switchTab(name) {
+  document.querySelectorAll('.pd-tab').forEach((t,i) => {
+    const names = ['offers','specs','about'];
+    t.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.pd-tab-panel').forEach(p => {
+    p.classList.toggle('active', p.id === 'tab-' + name);
+  });
+}
+window.switchTab = switchTab;
+
+/* ── STAR RENDERER ─────────────────────────────────────── */
+function renderStars(rating) {
+  const full = Math.floor(rating);
+  const half = rating - full >= 0.5;
+  let s = '★'.repeat(full);
+  if (half) s += '½';
+  s += '☆'.repeat(5 - full - (half ? 1 : 0));
+  return s;
+}
+
+function catLabel(key) {
+  for (const grp of categoryGroups) {
+    const found = grp.items.find(it => it.key === key);
+    if (found) return found.label;
+  }
+  return key;
+}
+
+/* ── RENDER PRODUCT ────────────────────────────────────── */
+function renderProduct(p) {
+  currentProductId = p.id;
+
+  const grp = categoryGroups.find(g => g.items.some(it => it.key === p.cat));
+  document.getElementById('bcCat').textContent = grp ? grp.group : p.cat;
+  document.getElementById('bcCat').href = `index.html#deals`;
+  document.getElementById('bcName').textContent = p.name;
+  document.title = `${p.name} — Shopnexa`;
+
+  document.getElementById('emojiStage').style.background = `linear-gradient(135deg, ${p.grad})`;
+  document.getElementById('prodGlyph').textContent = p.glyph;
+  document.getElementById('prodTag').textContent = p.tag;
+
+  const wBtn = document.getElementById('wishBtn');
+  if (wishlist.has(p.id)) { wBtn.textContent = '♥'; wBtn.classList.add('active'); }
+  else { wBtn.textContent = '♡'; wBtn.classList.remove('active'); }
+  updateWishBadge();
+
+  const thumbs = document.getElementById('thumbnails');
+  thumbs.innerHTML = ['1','2','3'].map((_, i) => `
+    <div class="pd-thumb-dot ${i===0?'active':''}" onclick="this.parentElement.querySelectorAll('.pd-thumb-dot').forEach(d=>d.classList.remove('active')); this.classList.add('active')">
+      ${i===0 ? p.glyph : '📦'}
+    </div>
+  `).join('');
+
+  document.getElementById('prodCat').textContent = catLabel(p.cat);
+  document.getElementById('prodName').textContent = p.name;
+  document.getElementById('prodStars').textContent = renderStars(p.rating);
+  document.getElementById('prodRatingNum').textContent = p.rating;
+  document.getElementById('prodReviews').textContent = `(${(p.reviews||0).toLocaleString()} reviews)`;
+  document.getElementById('prodTag2').textContent = p.tag;
+
+  // Agar koi seller offer nahi hai, safe fallback
+  const sellers = (p.sellerList && p.sellerList.length) ? p.sellerList : [{ name: 'Default', price: p.price, affiliateLink: '#' }];
+  const sorted = [...sellers].sort((a,b) => a.price - b.price);
+  const best = sorted[0];
+
+  document.getElementById('pdPriceNow').textContent = money(best.price);
+  document.getElementById('pdPriceWas').textContent = money(p.was);
+  const saved = p.was - best.price;
+  document.getElementById('pdPriceSave').textContent = saved > 0 ? `Save ${money(saved)}` : '';
+  document.getElementById('pdSellerName').textContent = best.name;
+  document.getElementById('prodPillBest').style.display = 'inline-block';
+
+  const mainBtn = document.getElementById('mainBuyBtn');
+  mainBtn.textContent = `Buy on ${best.name}  →`;
+  mainBtn.onclick = () => doRedirect(best.affiliateLink, best.name);
+
+  const tbody = document.getElementById('offersTbody');
+  tbody.innerHTML = sorted.map((o, i) => {
+    const isBest = i === 0;
+    const savings = money(p.was - o.price);
+    const savePct = p.was ? Math.round(((p.was - o.price) / p.was) * 100) : 0;
+    return `
+      <tr class="${isBest ? 'best-offer' : ''}">
+        <td>
+          <div class="seller-logo">
+            <div class="seller-icon">${SELLER_ICONS[o.name] || '🏪'}</div>
+            <span>${o.name}</span>
+            ${isBest ? '<span class="best-badge">BEST</span>' : ''}
+          </div>
+        </td>
+        <td>
+          <span class="offer-price ${isBest ? 'best' : ''}">${money(o.price)}</span>
+        </td>
+        <td>
+          <span class="offer-savings">Save ${savings} (${savePct}%)</span>
+        </td>
+        <td style="font-size:12px; color:var(--text-muted)">
+          ${SHIP_TIMES[o.name] || '7–21 days'}
+        </td>
+        <td>
+          <a class="go-btn ${isBest ? 'best-go' : ''}" onclick="doRedirect('${o.affiliateLink}','${o.name}')">
+            ${isBest ? '🛒 Buy now' : 'View →'}
+          </a>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  const specsGrid = document.getElementById('specsGrid');
+  specsGrid.innerHTML = Object.entries(p.specs || {}).map(([k,v]) => `
+    <div class="spec-card">
+      <div class="spec-key">${k}</div>
+      <div class="spec-val">${v}</div>
+    </div>
+  `).join('');
+
+  const related = products
+    .filter(r => r.cat === p.cat && r.id !== p.id)
+    .slice(0, 6);
+
+  document.getElementById('relatedGrid').innerHTML = related.length
+    ? related.map(r => `
+      <div class="related-card" onclick="location.href='product.html?id=${r.id}'">
+        <div class="related-thumb" style="background:linear-gradient(135deg,${r.grad})">
+          ${r.glyph}
+          <span style="position:absolute;top:8px;left:8px;background:var(--signal);color:#fff;font-family:var(--font-mono);font-size:9px;font-weight:700;padding:2px 6px;border-radius:5px;">${r.tag}</span>
+        </div>
+        <div class="related-body">
+          <div class="related-name">${r.name}</div>
+          <div><span class="related-price">${money(r.price)}</span><span class="related-was">${money(r.was)}</span></div>
+        </div>
+      </div>
+    `).join('')
+    : '<p style="color:var(--text-muted);font-size:13px;">No related products found.</p>';
+}
+
+/* ── INIT ──────────────────────────────────────────────── */
+async function init() {
+  await initCurrency();
+  if (getToken()) {
+  const res = await fetch("http://localhost:5000/api/wishlist", { headers: authHeader() });
+  const data = await res.json();
+  wishlist = new Set(data.wishlist.map(p => p._id));
+}
+  try {
+    products = await loadCatalog();
+  } catch (err) {
+    console.error('Failed to load catalog:', err);
+    document.getElementById('prodName').textContent = 'Could not load products';
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id'); // MongoDB _id ek STRING hai, parseInt mat karo
+  const product = products.find(p => p.id === id);
+
+  if (!product) {
+    document.getElementById('prodName').textContent = 'Product not found';
+    document.getElementById('mainBuyBtn').style.display = 'none';
+    return;
+  }
+
+  renderProduct(product);
+  loadReviews();
+setupAlertButton();
+}
+
+/* ── THEME ─────────────────────────────────────────────── */
+// Page load hote hi saved theme apply karo
+if (localStorage.getItem('sc_theme') === 'light') {
+  document.documentElement.classList.add('light');
+  document.getElementById('themeToggle').textContent = '☀️';
+}
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  document.documentElement.classList.toggle('light');
+  const isLight = document.documentElement.classList.contains('light');
+  document.getElementById('themeToggle').textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('sc_theme', isLight ? 'light' : 'dark');
+});
+
+
+
+document.getElementById('redirectOverlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) cancelRedirect();
+});
+
+init();
+</script>
+</body>
+</html>

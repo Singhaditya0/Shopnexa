@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — Shopnexa</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<style>
+.auth-wrap { max-width: 400px; margin: 80px auto; padding: 0 20px; }
+.auth-card { background: var(--surface); border: 1px solid var(--border-mid); border-radius: var(--radius-xl); padding: 32px; }
+.auth-card h1 { font-family: var(--font-display); font-size: 24px; margin-bottom: 6px; }
+.auth-card p.sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+.auth-field { margin-bottom: 16px; }
+.auth-field label { display:block; font-size:12.5px; color:var(--text-muted); margin-bottom:6px; }
+.auth-field input {
+  width: 100%; padding: 11px 14px; border-radius: 9px; box-sizing: border-box;
+  background: var(--surface-2); border: 1px solid var(--border-mid);
+  color: var(--text); font-family: var(--font-body); font-size: 14px;
+}
+.auth-field input:focus { outline: none; border-color: var(--accent); }
+.auth-submit {
+  width: 100%; padding: 13px; border-radius: 10px; border: none;
+  background: var(--accent); color: #050A0E; font-weight: 700; font-size: 14.5px;
+  cursor: pointer; margin-top: 8px;
+}
+.auth-submit:hover { background: var(--accent-2); }
+.auth-error { color: var(--signal); font-size: 12.5px; margin-top: 10px; display:none; }
+.auth-switch { text-align:center; margin-top: 18px; font-size: 13px; color: var(--text-muted); }
+.auth-switch a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><span class="dot"></span>Shopnexa</a>
+  </div>
+</header>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h1>Welcome back</h1>
+    <p class="sub">Login to access your wishlist, price alerts and reviews.</p>
+
+    <form id="loginForm">
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" id="password" required>
+      </div>
+      <button type="submit" class="auth-submit">Login</button>
+      <p class="auth-error" id="errorMsg"></p>
+    </form>
+
+    <p class="auth-switch">Don't have an account? <a href="register.html">Register</a></p>
+  </div>
+</div>
+
+<script src="toast.js"></script>
+<script src="auth.js"></script>
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const errorMsg = document.getElementById("errorMsg");
+  errorMsg.style.display = "none";
+
+  const data = await loginUser(email, password);
+
+  if (data.success) {
+    saveAuth(data.token, data.user);
+    window.location.href = "index.html";
+  } else {
+    errorMsg.textContent = data.message || "Login failed";
+    errorMsg.style.display = "block";
+  }
+});
+</script>
+</body>
+</html>
