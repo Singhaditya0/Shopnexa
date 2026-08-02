@@ -120,14 +120,24 @@ function render(list) {
   resultCount.textContent = filtered.length ? `Showing ${filtered.length} product${filtered.length>1?'s':''}` : 'No matches';
 
   if(filtered.length === 0){
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><div class="e-glyph">🔍</div>No products match your search. Try a different keyword or category.</div>`;
-    return;
+grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
+      <div class="e-glyph">🔍</div>
+      <div style="font-weight:600;margin-bottom:6px;">No products found</div>
+      <div style="color:var(--text-muted);font-size:13px;margin-bottom:14px;">Try a different keyword, or browse all categories instead.</div>
+      <button class="btn btn-ghost" onclick="document.getElementById('searchInput').value='';searchTerm='';setCategory('All');">Clear filters</button>
+    </div>`;
+        return;
   }
 
   grid.innerHTML = filtered.map(p => `
     <div class="card">
       <div class="thumb" style="background:linear-gradient(135deg, ${p.grad}); cursor:pointer;" onclick="location.href='product.html?id=${p.id}'">
         <span class="tag">${p.tag}</span>
+        ${(() => {
+          const lowest = p.sellerList && p.sellerList.length > 0 ? Math.min(...p.sellerList.map(s => s.price)) : p.price;
+          const pct = p.was > lowest ? Math.round(((p.was - lowest) / p.was) * 100) : 0;
+          return pct > 0 ? `<span class="discount-badge">-${pct}%</span>` : '';
+        })()}
         <div class="wish ${wishlist.has(p.id)?'active':''}" onclick="event.stopPropagation(); toggleWish('${p.id}')">${wishlist.has(p.id)?'♥':'♡'}</div>
         ${p.glyph}
       </div>
@@ -145,6 +155,7 @@ function render(list) {
     )}
   </span>
   <span class="price-was">${money(p.was)}</span>
+  <div class="store-badge">via ${p.seller}</div>
 </div>
   <label class="compare-check">
     <input type="checkbox" ${compareSet.has(p.id)?'checked':''} onchange="toggleCompare('${p.id}')"> Compare
