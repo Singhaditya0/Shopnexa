@@ -5,10 +5,18 @@ if (!getToken()) {
 }
 
 async function loadStats() {
-  const res = await fetch(`${API}/admin/analytics`, { headers: authHeader() });
+  const res = await fetch(`${API}/admin/analytics`, {
+    headers: authHeader()
+  });
+
   const data = await res.json();
 
-  if (!data.success) { alert(data.message); return; }
+  console.log("Analytics Response:", data);
+
+  if (!data.success) {
+    alert(data.message);
+    return;
+  }
 
   document.getElementById("statsGrid").innerHTML = `
     <div class="stat-card"><div class="num">${data.analytics.totalProducts}</div><div class="label">Products</div></div>

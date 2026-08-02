@@ -1,13 +1,32 @@
 const Click = require("../models/Click");
 const Product = require("../models/Product");
 
+const Click = require("../models/Click");
+const Product = require("../models/Product");
+const User = require("../models/User");
+const Review = require("../models/Review");
+
 exports.getAnalytics = async (req, res) => {
   try {
     const totalClicks = await Click.countDocuments();
     const totalProducts = await Product.countDocuments();
-    res.json({ success: true, data: { totalClicks, totalProducts } });
+    const totalUsers = await User.countDocuments();
+    const totalReviews = await Review.countDocuments();
+
+    res.json({
+      success: true,
+      analytics: {
+        totalProducts,
+        totalUsers,
+        totalClicks,
+        totalReviews,
+      },
+    });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
 
