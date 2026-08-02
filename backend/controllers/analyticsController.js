@@ -1,8 +1,5 @@
 const Click = require("../models/Click");
 const Product = require("../models/Product");
-
-const Click = require("../models/Click");
-const Product = require("../models/Product");
 const User = require("../models/User");
 const Review = require("../models/Review");
 
