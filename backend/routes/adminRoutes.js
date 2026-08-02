@@ -15,6 +15,8 @@ const {
   getAllClicks,
   getTopProducts,
   getTopStores,
+  getUsers,
+  getAllReviews,
 } = require("../controllers/analyticsController");
 
 // Product management (already tha)
@@ -28,5 +30,7 @@ router.get("/analytics", protect, adminOnly, getAnalytics);
 router.get("/clicks", protect, adminOnly, getAllClicks);
 router.get("/top-products", protect, adminOnly, getTopProducts);
 router.get("/top-stores", protect, adminOnly, getTopStores);
+router.get("/users", protect, adminOnly, getUsers);
+router.get("/reviews", protect, adminOnly, getAllReviews);
 
 module.exports = router;

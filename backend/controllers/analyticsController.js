@@ -61,3 +61,22 @@ exports.getTopStores = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password");
+    res.json({ success: true, data: users });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+exports.getAllReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find()
+      .populate("product", "name")
+      .sort({ createdAt: -1 });
+    res.json({ success: true, data: reviews });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
