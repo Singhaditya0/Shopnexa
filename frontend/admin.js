@@ -18,22 +18,22 @@ async function loadStats() {
 
   document.getElementById("statsGrid").innerHTML = `
     <div class="stat-card">
-      <div class="num">${data.data.totalProducts}</div>
+      <div class="num">${data.analytics.totalProducts}</div>
       <div class="label">Products</div>
     </div>
 
     <div class="stat-card">
-      <div class="num">0</div>
+      <div class="num">${data.analytics.totalUsers}</div>
       <div class="label">Users</div>
     </div>
 
     <div class="stat-card">
-      <div class="num">${data.data.totalClicks}</div>
+      <div class="num">${data.analytics.totalClicks}</div>
       <div class="label">Clicks</div>
     </div>
 
     <div class="stat-card">
-      <div class="num">0</div>
+      <div class="num">${data.analytics.totalReviews}</div>
       <div class="label">Reviews</div>
     </div>
   `;
