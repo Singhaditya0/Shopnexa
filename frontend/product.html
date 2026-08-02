@@ -534,7 +534,7 @@
 <script src="currency.js"></script>
 <script src="toast.js"></script>
 <script type="module">
-  const API = "http://localhost:5000/api";
+  const API = "https://shopnexa-backend.onrender.com/api";
 
 async function loadReviews() {
   const res = await fetch(`${API}/products/${currentProductId}/reviews`);
@@ -681,7 +681,7 @@ async function toggleWish() {
   }
   updateWishBadge();
 
-  await fetch(`http://localhost:5000/api/wishlist/${currentProductId}`, { method, headers: authHeader() });
+  await fetch(`https://shopnexa-backend.onrender.com/api/wishlist/${currentProductId}`, { method, headers: authHeader() });
 }
 window.toggleWish = toggleWish;
 function updateWishBadge() {
@@ -855,7 +855,7 @@ function renderProduct(p) {
 async function init() {
   await initCurrency();
   if (getToken()) {
-  const res = await fetch("http://localhost:5000/api/wishlist", { headers: authHeader() });
+  const res = await fetch("https://shopnexa-backend.onrender.com/api/wishlist", { headers: authHeader() });
   const data = await res.json();
   wishlist = new Set(data.wishlist.map(p => p._id));
 }
