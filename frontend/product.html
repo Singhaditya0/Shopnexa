@@ -539,7 +539,7 @@
 async function loadReviews() {
   const res = await fetch(`${API}/products/${currentProductId}/reviews`);
   const data = await res.json();
-  renderReviews(data.reviews);
+  renderReviews(data.data || []);
 }
 
 function renderReviews(reviews) {
