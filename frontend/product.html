@@ -855,9 +855,15 @@ function renderProduct(p) {
 async function init() {
   await initCurrency();
   if (getToken()) {
-  const res = await fetch("https://shopnexa-backend.onrender.com/api/wishlist", { headers: authHeader() });
-  const data = await res.json();
-  wishlist = new Set(data.wishlist.map(p => p._id));
+  try {
+    const res = await fetch("https://shopnexa-backend.onrender.com/api/wishlist", { headers: authHeader() });
+    const data = await res.json();
+    if (data.success) {
+      wishlist = new Set(data.data.map(p => p._id));
+    }
+  } catch (err) {
+    console.error('Wishlist load failed:', err);
+  }
 }
   try {
     products = await loadCatalog();
