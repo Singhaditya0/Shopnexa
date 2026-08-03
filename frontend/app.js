@@ -65,6 +65,7 @@ async function detectCurrency() {
   if (badge && ratesLoaded) { badge.textContent = '● live'; badge.style.color = '#4ade80'; }
   renderCurrencyPicker();
   render(products);
+  renderHeroPulse();
 }
 
 function renderCurrencyPicker() {
