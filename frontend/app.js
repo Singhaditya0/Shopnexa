@@ -131,42 +131,56 @@ grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
   }
 
   grid.innerHTML = filtered.map(p => `
-    <div class="card">
-      <div class="thumb" style="background:linear-gradient(135deg, ${p.grad}); cursor:pointer;" onclick="location.href='product.html?id=${p.id}'">
-        <span class="tag">${p.tag}</span>
-        ${(() => {
-          const lowest = p.sellerList && p.sellerList.length > 0 ? Math.min(...p.sellerList.map(s => s.price)) : p.price;
-          const pct = p.was > lowest ? Math.round(((p.was - lowest) / p.was) * 100) : 0;
-          return pct > 0 ? `<span class="discount-badge">-${pct}%</span>` : '';
-        })()}
-        <div class="wish ${wishlist.has(p.id)?'active':''}" onclick="event.stopPropagation(); toggleWish('${p.id}')">${wishlist.has(p.id)?'♥':'♡'}</div>
-        ${p.glyph}
-      </div>
-      <div class="card-body">
-        <div class="card-cat">${catLabel(p.cat)}</div>
-        <div class="card-title" style="cursor:pointer;" onclick="location.href='product.html?id=${p.id}'">${p.name}</div>
-        <div class="card-rating"><span class="star">★</span> <b>${p.rating}</b> <span style="color:var(--text-muted);">(${p.reviews.toLocaleString()}) · ${p.seller}</span></div>
-        <div class="card-foot">
-  <div>
-  <span class="price-now">
-    ${money(
-      p.sellerList && p.sellerList.length > 0
-        ? Math.min(...p.sellerList.map(s => s.price))
-        : p.price
-    )}
-  </span>
-  <span class="price-was">${money(p.was)}</span>
-  <div class="store-badge">via ${p.seller}</div>
+<div class="card horizontal-card">
+
+<div class="thumb"
+onclick="location.href='product.html?id=${p.id}'">
+
+<img src="${p.image}" alt="${p.name}">
+
 </div>
-  <label class="compare-check">
-    <input type="checkbox" ${compareSet.has(p.id)?'checked':''} onchange="toggleCompare('${p.id}')"> Compare
-  </label>
+
+<div class="card-body">
+
+<div class="card-title"
+onclick="location.href='product.html?id=${p.id}'">
+${p.name}
 </div>
+
+<div class="card-rating">
+⭐ ${p.rating}
+(${p.reviews})
+</div>
+
+<div class="price-row">
+
+<span class="price-now">
+${money(
+p.sellerList?.length
+? Math.min(...p.sellerList.map(s=>s.price))
+: p.price
+)}
+</span>
+
+<span class="price-was">
+${money(p.was)}
+</span>
+
+</div>
+
 ${sellerTickerHTML(p)}
-<button class="buy-btn" onclick="location.href='product.html?id=${p.id}'">View deal →</button>
-      </div>
-    </div>
-  `).join('');
+
+<button class="buy-btn"
+onclick="location.href='product.html?id=${p.id}'">
+
+Compare Prices →
+
+</button>
+
+</div>
+
+</div>
+`).join('');
 }
 function bestSellerPrice(p) {
   if (!p.sellerList || p.sellerList.length === 0) return p.price;
