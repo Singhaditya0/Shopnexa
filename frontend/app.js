@@ -1356,56 +1356,16 @@ document.getElementById('sidebarClose').addEventListener('click', closeSidebar);
 
 document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
 
-
-
-
-
-
-
-// Page load hote hi saved theme apply karo
-
-
-
-if (localStorage.getItem('sc_theme') === 'light') {
-
-
-
+if (localStorage.getItem('sc_theme') !== 'dark') {
   document.documentElement.classList.add('light');
-
-
-
   document.getElementById('themeToggle').textContent = '☀️';
-
-
-
 }
 
-
-
-
-
-
-
 document.getElementById('themeToggle').addEventListener('click', () => {
-
-
-
   document.documentElement.classList.toggle('light');
-
-
-
   const isLight = document.documentElement.classList.contains('light');
-
-
-
   document.getElementById('themeToggle').textContent = isLight ? '☀️' : '🌙';
-
-
-
   localStorage.setItem('sc_theme', isLight ? 'light' : 'dark');
-
-
-
 });
 
 
