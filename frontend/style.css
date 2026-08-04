@@ -451,10 +451,10 @@ select:hover { border-color: var(--border-hi); }
 @media(max-width: 640px) {
   .thumb { 
     height: auto; 
-    width: 110px; 
+    width: 140px;
     min-width: 110px;
     aspect-ratio: 1;
-    font-size: 36px; 
+    font-size: 42px;
     border-radius: 8px 0 0 8px;
   }
 }
