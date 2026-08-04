@@ -10,20 +10,23 @@ export async function loadCatalog() {
     const products = Array.isArray(data) ? data : (data.products || []);
 
     return products.map(p => {
-      // Backend "offers" bhejta hai ({store, price, url}) —
-      // isko frontend ke expected shape "sellerList" ({name, price, affiliateLink}) mein convert karo
-      const sellerList = (p.offers || []).map(o => ({
-        name: o.store,
-        price: o.price,
-        affiliateLink: o.url
-      }));
+      const sellerList = (p.offers || []).map(o => {
+        const units = o.unitCount && o.unitCount > 0 ? o.unitCount : 1;
+        return {
+          name: o.store,
+          price: +(o.price / units).toFixed(2),   // ← divide by units
+          affiliateLink: o.url
+        };
+      });
+
+      const baseUnits = p.unitCount && p.unitCount > 0 ? p.unitCount : 1;
 
       return {
         id: p._id,
         name: p.name,
         description: p.description || '',
-        price: p.price,
-        was: p.was ?? p.price,
+        price: +(p.price / baseUnits).toFixed(2),   // ← divide by units
+        was: p.was ?? +(p.price / baseUnits).toFixed(2),
         currency: p.currency || 'INR',
         cat: (p.category || '').toLowerCase(),
         image: p.image || (p.images && p.images[0]) || '',

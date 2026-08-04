@@ -144,9 +144,10 @@ document.getElementById("addProductBtn").addEventListener("click", async () => {
   const name = document.getElementById("apName").value.trim();
   const category = document.getElementById("apCategory").value.trim();
   const price = document.getElementById("apPrice").value;
+  const unitCount = document.getElementById("apUnitCount").value || 1;
   const brand = document.getElementById("apBrand").value.trim();
   const image = document.getElementById("apImage").value.trim();
-
+document.getElementById("apUnitCount").value = "1";
   if (!name || !category || !price) { 
     showToast("Name, Category, and Base Price are required!"); 
     return; 
@@ -158,13 +159,15 @@ document.getElementById("addProductBtn").addEventListener("click", async () => {
   offerRows.forEach(row => {
     const store = row.querySelector(".of-store").value.trim();
     const offerPrice = row.querySelector(".of-price").value;
+    const offerUnits = row.querySelector(".of-units").value || 1;  // NEW
     const url = row.querySelector(".of-url").value.trim();
 
     if (store && offerPrice && url) {
       offers.push({
         store: store,
         price: Number(offerPrice),
-        url: url
+        url: url,
+        unitCount: Number(offerUnits)   // NEW
       });
     }
   });
@@ -173,7 +176,13 @@ document.getElementById("addProductBtn").addEventListener("click", async () => {
   const url = isEditing ? `${API}/admin/products/${editingProductId}` : `${API}/admin/products`;
   const method = isEditing ? "PUT" : "POST";
 
-  const body = { name, category, price: Number(price), brand, images: image ? [image] : [] };
+  const body = { 
+    name, category, 
+    price: Number(price), 
+    unitCount: Number(unitCount),   // NEW
+    brand, 
+    images: image ? [image] : [] 
+  };
   if (offers.length > 0) body.offers = offers;
 
   try {
