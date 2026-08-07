@@ -1657,68 +1657,20 @@ async function initApp() {
 
 
   wishlist = await loadWish();
-
-
-
-
-
-
-
+  
   const wc = document.getElementById('wishCount');
-
-
 
   wc.textContent = wishlist.size;
 
-
-
   wc.style.display = wishlist.size ? 'flex' : 'none';
-
-
-
-
-
-
 
   renderSidebar();
 
-
-
-  renderHeroPulse();
-
-
-
-  detectCurrency();
-
-
-
+ detectCurrency();
 }
-
-
-
-
-
-
-
 initApp();
 
-
-
-
-
-
-
-
-
-
-
-// Jab bhi page bfcache se restore ho (back/forward navigation), catalog dobara load karo
-
-
-
 window.addEventListener('pageshow', (event) => {
-
-
 
   if (event.persisted) {
 
