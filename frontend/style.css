@@ -299,11 +299,18 @@ section { padding: 60px 0; }
   }
   .cat-card .glyph {
     display: flex; align-items: center; justify-content: center;
-    width: 56px; height: 56px; margin: 0 auto 6px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; font-size: 22px;
-    box-shadow: var(--card-shadow);
+    width: 56px; height: 54px; margin: 0 auto 8px;
+    background: transparent; border: none; box-shadow: none;
+    border-radius: 50%; font-size: 24px;
+    transition: transform 0.12s ease;
   }
+  .cat-card:active .glyph { transform: scale(0.95); }
+
+  .cat-card[data-cat="grp:fashion"] .glyph      { background: rgba(167,139,250,0.18); }
+  .cat-card[data-cat="grp:beauty"] .glyph       { background: rgba(251,113,133,0.18); }
+  .cat-card[data-cat="grp:electronics"] .glyph  { background: rgba(56,189,248,0.18); }
+  .cat-card[data-cat="grp:kids"] .glyph         { background: rgba(251,191,36,0.18); }
+  .cat-card[data-cat="grp:pets"] .glyph         { background: rgba(52,211,153,0.18); }
   .cat-card .title {
     font-size: 11px; font-weight: 600; line-height: 1.2;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
