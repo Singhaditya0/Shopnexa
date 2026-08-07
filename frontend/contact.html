@@ -1,109 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us - ShopNexa</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <meta property="og:title" content="ShopNexa - Discover Smarter. Shop Better.">
-  <meta property="og:description" content="Your smart shopping guide — find the best deals before you buy.">
-  <meta property="og:image" content="https://www.yourdomain.com/og-image.png">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.yourdomain.com/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact ShopNexa</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <!-- Navigation -->
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="logo"><span class="dot"></span> ShopNexa</div>
-      <nav class="links">
-        <a href="index.html">Home</a>
-        <a href="index.html#deals">Products</a>
-        <a href="about.html">About</a>
-        <a href="contact.html" class="active">Contact</a>
-      </nav>
-    </div>
-  </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-grid">
-      <div>
-        <h1>Get in <span>Touch</span></h1>
-        <p class="sub">Questions, feedback, or a partnership idea? We'd love to hear from you.</p>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="dot"></span>ShopNexa</div>
+    <nav class="links">
+      <a href="index.html#categories">Categories</a>
+      <a href="index.html#deals">Deals</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-ghost" style="padding:9px 16px; font-size:12.5px;">← Back to site</a>
+    </div>
+  </div>
+</header>
+
+<section class="legal-hero">
+  <div class="legal-hero-inner">
+    <div class="legal-eyebrow">CONTACT US</div>
+    <h1>We'd love to hear <span>from you.</span></h1>
+    <p>Questions, feedback, partnership proposals or a pricing correction — reach the ShopNexa team directly. Every email is read by a human.</p>
+  </div>
+</section>
+
+<div class="legal-body">
+
+  <div class="contact-card">
+    <div class="contact-card-head">
+      <div class="label">Primary contact</div>
+      <div class="email-row">
+        <span style="width:44px;height:44px;border-radius:14px;background:rgba(5,10,14,0.12);display:flex;align-items:center;justify-content:center;font-size:18px;">✉</span>
+        <a href="mailto:shop.nexa28@gmail.com">shop.nexa28@gmail.com</a>
+      </div>
+      <p>This is our official and only support address. We never ask for payment details, OTPs or passwords over email.</p>
+      <div class="btns">
+        <a href="mailto:shop.nexa28@gmail.com?subject=Enquiry%20%E2%80%94%20ShopNexa" class="btn-solid-dark">Send an email</a>
+        <button class="btn-outline-dark" onclick="copyEmail(this)">⎘ Copy address</button>
       </div>
     </div>
-  </section>
+    <div class="contact-info-grid">
+      <div><div class="i">⏱</div><div class="l">Response time</div><div class="v">Within 24–48 business hours</div></div>
+      <div><div class="i">📅</div><div class="l">Support hours</div><div class="v">Mon–Sat, 10AM–7PM IST</div></div>
+      <div><div class="i">📍</div><div class="l">Based in</div><div class="v">India</div></div>
+    </div>
+  </div>
 
-  <!-- Contact details -->
-  <section>
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Reach Us Directly</h2>
+  <div class="legal-section">
+    <h2>Choose the right subject line</h2>
+    <p>To help us route your message faster, please use one of the subject lines below when writing to <a href="mailto:shop.nexa28@gmail.com" class="mail-link">shop.nexa28@gmail.com</a>.</p>
+    <div class="grid-2">
+      <a class="reason-card" href="mailto:shop.nexa28@gmail.com?subject=Partnership%20Enquiry%20%E2%80%94%20ShopNexa">
+        <div class="top"><span class="icon">🤝</span><span style="color:var(--text-muted);">↗</span></div>
+        <div class="title">Business & Partnerships</div>
+        <div class="desc">Brand collaborations, affiliate programs, sponsored placements and bulk deal submissions.</div>
+        <div class="subj">Partnership Enquiry — ShopNexa</div>
+      </a>
+      <a class="reason-card" href="mailto:shop.nexa28@gmail.com?subject=Support%20Request%20%E2%80%94%20ShopNexa">
+        <div class="top"><span class="icon">🛟</span><span style="color:var(--text-muted);">↗</span></div>
+        <div class="title">Support & Feedback</div>
+        <div class="desc">Site issues, broken links, incorrect prices, feature requests or general product feedback.</div>
+        <div class="subj">Support Request — ShopNexa</div>
+      </a>
+      <a class="reason-card" href="mailto:shop.nexa28@gmail.com?subject=Legal%20%2F%20Privacy%20Request%20%E2%80%94%20ShopNexa">
+        <div class="top"><span class="icon">⚖</span><span style="color:var(--text-muted);">↗</span></div>
+        <div class="title">Legal, Privacy & Takedown</div>
+        <div class="desc">Copyright/DMCA notices, trademark concerns, data deletion requests and privacy questions.</div>
+        <div class="subj">Legal / Privacy Request — ShopNexa</div>
+      </a>
+      <a class="reason-card" href="mailto:shop.nexa28@gmail.com?subject=Press%20Enquiry%20%E2%80%94%20ShopNexa">
+        <div class="top"><span class="icon">📰</span><span style="color:var(--text-muted);">↗</span></div>
+        <div class="title">Press & Media</div>
+        <div class="desc">Interview requests, brand assets, company information and media collaborations.</div>
+        <div class="subj">Press Enquiry — ShopNexa</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <h2>What to include in your message</h2>
+    <ul class="legal-bullets">
+      <li>Your name and the email address associated with your ShopNexa account (if any).</li>
+      <li>The exact product or page URL you are referring to.</li>
+      <li>A short description of the issue, along with a screenshot if it is a display or pricing problem.</li>
+      <li>The device and browser you were using — for example, "Android, Chrome" or "iPhone, Safari".</li>
+    </ul>
+  </div>
+
+  <div class="legal-section">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>Does ShopNexa sell products directly?</summary>
+        <div class="a">No. ShopNexa is a discovery and comparison platform. All purchases are completed on the retailer's own website, and your order, payment, shipping and returns are handled entirely by that retailer.</div>
+      </details>
+      <details class="faq-item">
+        <summary>A price on the site is wrong. What should I do?</summary>
+        <div class="a">Prices change frequently and can occasionally lag behind the retailer. Email us the product link and the price you are seeing, and we will correct our listing — usually within a few hours.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I request deletion of my data?</summary>
+        <div class="a">Send an email from your registered address with the subject "Data Deletion Request". We will verify ownership and permanently remove your account data within 30 days.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I list my store or product on ShopNexa?</summary>
+        <div class="a">Yes. We onboard verified sellers with genuine pricing and a clear return policy. Write to us with your store details, catalogue and affiliate program information.</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <h2>A note on security</h2>
+    <div class="security-note">
+      <b>Beware of impersonation.</b> ShopNexa will only ever contact you from <b>shop.nexa28@gmail.com</b>. We never request card numbers, UPI PINs, OTPs or passwords, and we never ask for payment to "release" a deal or discount. If you receive such a message, please report it to us immediately.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="logo" style="margin-bottom:10px;"><span class="dot"></span>ShopNexa</div>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.6; max-width:280px;">Independent price comparison across fashion, beauty, electronics, kids and pets. We track sellers so you don't have to.</p>
       </div>
-      <div class="cat-grid">
-        <div class="cat-card">
-          <span class="glyph">✉️</span>
-          <div class="title">General Support</div>
-          <div class="count"><a href="mailto:support@yourdomain.com">support@yourdomain.com</a></div>
-        </div>
-        <div class="cat-card">
-          <span class="glyph">🤝</span>
-          <div class="title">Partnerships & Affiliates</div>
-          <div class="count"><a href="mailto:partners@yourdomain.com">partners@yourdomain.com</a></div>
-        </div>
-        <div class="cat-card">
-          <span class="glyph">⏱️</span>
-          <div class="title">Response Time</div>
-          <div class="count">We typically reply within 1–2 business days</div>
-        </div>
+      <div class="foot-col">
+        <h4>Categories</h4>
+        <a href="index.html#categories">Fashion</a><a href="index.html#categories">Beauty & Personal Care</a><a href="index.html#categories">Electronics & Home</a><a href="index.html#categories">Kids</a><a href="index.html#categories">Pets</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="about.html">About</a><a href="contact.html">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="affiliate-disclosure.html">Affiliate Disclosure</a>
       </div>
     </div>
-  </section>
+    <div class="disclosure">ShopNexa is a demo interface. In production: some links on this site are affiliate links — if you buy through them, we may earn a commission at no extra cost to you. Prices and availability are pulled from third-party sellers and can change without notice.</div>
+  </div>
+</footer>
 
-  <!-- Contact form -->
-  <section>
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Send Us a Message</h2>
-      </div>
-      <form class="contact-form" onsubmit="event.preventDefault(); alert('Thanks for reaching out! This demo form isn\'t connected to a backend yet — please email us directly at support@yourdomain.com in the meantime.');">
-        <div class="form-row">
-          <label for="cName">Name</label>
-          <input type="text" id="cName" name="name" placeholder="Your name" required>
-        </div>
-        <div class="form-row">
-          <label for="cEmail">Email</label>
-          <input type="email" id="cEmail" name="email" placeholder="you@example.com" required>
-        </div>
-        <div class="form-row">
-          <label for="cMessage">Message</label>
-          <textarea id="cMessage" name="message" rows="5" placeholder="How can we help?" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Send Message</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p class="disclosure">© 2026 ShopNexa Marketplace. All rights reserved.</p>
-  </footer>
-
-  <style>
-    .contact-form { max-width: 520px; display: flex; flex-direction: column; gap: 16px; }
-    .form-row { display: flex; flex-direction: column; gap: 6px; }
-    .form-row label { font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); }
-    .form-row input, .form-row textarea {
-      background: var(--surface-2); border: 1px solid var(--border-mid);
-      border-radius: 10px; padding: 11px 14px; color: var(--text);
-      font-family: var(--font-body); font-size: 14px; resize: vertical;
-    }
-    .form-row input:focus, .form-row textarea:focus {
-      outline: none; border-color: var(--accent);
-    }
-    .contact-form .btn { align-self: flex-start; }
-  </style>
+<script>
+if (localStorage.getItem('sc_theme') !== 'dark') {
+  document.documentElement.classList.add('light');
+}
+function copyEmail(btn) {
+  navigator.clipboard.writeText('shop.nexa28@gmail.com');
+  const original = btn.textContent;
+  btn.textContent = '✓ Copied!';
+  setTimeout(() => btn.textContent = original, 2000);
+}
+</script>
 </body>
 </html>
