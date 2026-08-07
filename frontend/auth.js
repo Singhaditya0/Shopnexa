@@ -1,5 +1,5 @@
 // auth.js — har page pe include karo, login/register/logout ka common logic
-const AUTH_API = "https://shopnexa-backend.onrender.com/api/auth";
+const AUTH_API = "https://ShopNexa-backend.onrender.com/api/auth";
 
 // window. lagane se ye functions globally available ho jayenge
 window.getToken = function() {

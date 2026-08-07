@@ -1,4 +1,4 @@
-/* Shopnexa — Multi-Marketplace Price Comparison
+/* ShopNexa — Multi-Marketplace Price Comparison
    
    NOW: Each product has `offers` array [{marketplace, price, url}]
    All prices stored in USD. Frontend converts to user's local currency.

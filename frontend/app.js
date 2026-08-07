@@ -30,7 +30,7 @@ async function loadWish() {
 
 
 
-    const res = await fetch("https://shopnexa-backend.onrender.com/api/wishlist", { headers: authHeader() });
+    const res = await fetch("https://ShopNexa-backend.onrender.com/api/wishlist", { headers: authHeader() });
 
 
 

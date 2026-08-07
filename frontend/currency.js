@@ -1,4 +1,4 @@
-/* ── Shopnexa shared currency utilities ──────────────────────────────
+/* ── ShopNexa shared currency utilities ──────────────────────────────
    Used by both index.html (via app.js) and product.html.
    Previously this logic was duplicated in both places — now it lives
    here once, so updating rates/currencies only needs one edit.

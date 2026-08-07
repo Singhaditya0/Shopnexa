@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta property="og:title" content="Shopnexa - Discover Smarter. Shop Better.">
+  <meta property="og:title" content="ShopNexa - Discover Smarter. Shop Better.">
 <meta property="og:description" content="Your smart shopping guide — find the best deals before you buy.">
 <meta property="og:image" content="https://www.yourdomain.com/og-image.png">
 <meta property="og:type" content="website">
@@ -9,8 +9,8 @@
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product — Shopnexa</title>
-<meta name="description" content="Compare prices across Amazon, Flipkart and more sellers on Shopnexa.">
+<title>Product — ShopNexa</title>
+<meta name="description" content="Compare prices across Amazon, Flipkart and more sellers on ShopNexa.">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0A0C12">
 <link rel="stylesheet" href="style.css">
@@ -327,7 +327,7 @@
 <!-- NAV -->
 <header class="nav">
   <div class="nav-inner">
-    <a href="index.html" class="logo"><span class="dot"></span>Shopnexa</a>
+    <a href="index.html" class="logo"><span class="dot"></span>ShopNexa</a>
     <nav class="links">
       <a href="index.html#categories">Categories</a>
       <a href="index.html#deals">Deals</a>
@@ -413,7 +413,7 @@
       </div>
 
       <p style="font-size:11.5px; color:var(--text-muted); line-height:1.6;">
-        Shopnexa compares prices across multiple sellers. We may earn a small affiliate commission — at no extra cost to you.
+        ShopNexa compares prices across multiple sellers. We may earn a small affiliate commission — at no extra cost to you.
       </p>
     </div>
   </div>
@@ -460,7 +460,7 @@
     <h2 class="section-title">About this product</h2>
     <div class="pd-bottom">
       <div class="info-card">
-        <h4>🛒 How Shopnexa works</h4>
+        <h4>🛒 How ShopNexa works</h4>
         <div class="info-row"><span>1️⃣</span><span>We track prices across trusted global marketplaces daily.</span></div>
         <div class="info-row"><span>2️⃣</span><span>Click "Buy on [seller]" — we redirect you to the seller's live listing.</span></div>
         <div class="info-row"><span>3️⃣</span><span>Complete your purchase directly with the seller. We never handle payments.</span></div>
@@ -468,7 +468,7 @@
       </div>
       <div class="info-card">
         <h4>⚖️ Affiliate disclosure</h4>
-        <div class="info-row"><span>🔗</span><span>Some links on Shopnexa are affiliate links — if you buy through them, we may earn a small commission.</span></div>
+        <div class="info-row"><span>🔗</span><span>Some links on ShopNexa are affiliate links — if you buy through them, we may earn a small commission.</span></div>
         <div class="info-row"><span>💸</span><span>This is at no extra cost to you. The price you see is the seller's price.</span></div>
         <div class="info-row"><span>🎯</span><span>Our recommendations are based on price, rating, and availability — not commission rates.</span></div>
       </div>
@@ -502,7 +502,7 @@
   <div class="pd-wrap">
     <div class="foot-grid">
       <div class="foot-col">
-        <div class="logo" style="margin-bottom:10px;"><span class="dot"></span>Shopnexa</div>
+        <div class="logo" style="margin-bottom:10px;"><span class="dot"></span>ShopNexa</div>
         <p style="font-size:13px; color:var(--text-muted); line-height:1.6; max-width:280px;">Independent price comparison. We track sellers so you don't have to.</p>
       </div>
       <div class="foot-col">
@@ -525,7 +525,7 @@
         <a href="affiliate-disclosure.html">Affiliate Disclosure</a>
       </div>
     </div>
-    <div class="disclosure">Shopnexa is a demo interface. Affiliate links may earn us a commission at no extra cost to you.</div>
+    <div class="disclosure">ShopNexa is a demo interface. Affiliate links may earn us a commission at no extra cost to you.</div>
   </div>
 </footer>
 
@@ -534,7 +534,7 @@
 <script src="currency.js"></script>
 <script src="toast.js"></script>
 <script type="module">
-  const API = "https://shopnexa-backend.onrender.com/api";
+  const API = "https://ShopNexa-backend.onrender.com/api";
 
 async function loadReviews() {
   const res = await fetch(`${API}/products/${currentProductId}/reviews`);
@@ -681,7 +681,7 @@ async function toggleWish() {
   }
   updateWishBadge();
 
-  await fetch(`https://shopnexa-backend.onrender.com/api/wishlist/${currentProductId}`, { method, headers: authHeader() });
+  await fetch(`https://ShopNexa-backend.onrender.com/api/wishlist/${currentProductId}`, { method, headers: authHeader() });
 }
 window.toggleWish = toggleWish;
 function updateWishBadge() {
@@ -750,7 +750,7 @@ function renderProduct(p) {
   document.getElementById('bcCat').textContent = grp ? grp.group : p.cat;
   document.getElementById('bcCat').href = `index.html#deals`;
   document.getElementById('bcName').textContent = p.name;
-  document.title = `${p.name} — Shopnexa`;
+  document.title = `${p.name} — ShopNexa`;
 
   document.getElementById('emojiStage').style.background = `linear-gradient(135deg, ${p.grad})`;
   document.getElementById('prodGlyph').textContent = p.glyph;
@@ -856,7 +856,7 @@ async function init() {
   await initCurrency();
   if (getToken()) {
   try {
-    const res = await fetch("https://shopnexa-backend.onrender.com/api/wishlist", { headers: authHeader() });
+    const res = await fetch("https://ShopNexa-backend.onrender.com/api/wishlist", { headers: authHeader() });
     const data = await res.json();
     if (data.success) {
       wishlist = new Set(data.data.map(p => p._id));

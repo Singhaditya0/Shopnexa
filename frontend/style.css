@@ -1,5 +1,5 @@
 /* ============================================================
-   Shopnexa — Premium UI v2
+   ShopNexa — Premium UI v2
    Dark-first, light-mode supported, mobile-ready
    ============================================================ */
 
@@ -177,9 +177,9 @@ nav.links a:hover { color: var(--text); }
   pointer-events: none;
 }
 .hero-grid {
-  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center;
+  display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center;
 }
-@media(max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+.hero-grid > div { max-width: 620px; }
 
 .eyebrow {
   display: inline-flex; align-items: center; gap: 8px;

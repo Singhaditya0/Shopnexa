@@ -1,6 +1,6 @@
 {
-  "name": "Shopnexa - Discover Smarter. Shop Better.",
-  "short_name": "Shopnexa",
+  "name": "ShopNexa - Discover Smarter. Shop Better.",
+  "short_name": "ShopNexa",
   "description": "Discover smarter. Shop better. Compare prices and find the best deals across trusted marketplaces.",
   "start_url": "./index.html",
   "scope": "./",
