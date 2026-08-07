@@ -445,3 +445,22 @@ window.closeCompare = closeCompare;
 window.setCategory = setCategory;
 window.showOffers = showOffers;
 window.closeOffersModal = closeOffersModal;
+/* ── Header v2: hamburger menu + search sync ─────────────────────── */
+document.getElementById('hamburgerBtn').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+
+// Header search boxes just mirror into the existing #searchInput
+// so we reuse the debounce + filtering logic already in app.js
+function wireHeaderSearch(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', (e) => {
+    const main = document.getElementById('searchInput');
+    main.value = e.target.value;
+    main.dispatchEvent(new Event('input'));
+    document.getElementById('deals').scrollIntoView({ behavior: 'smooth' });
+  });
+}
+wireHeaderSearch('headerSearch');
+wireHeaderSearch('headerSearchMobile');
