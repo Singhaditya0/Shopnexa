@@ -216,67 +216,13 @@ const categoryGroups = [
 
 ];
 
-
-
-
-
-
-
-/* ── Currency detection & formatting ─────────────────────────────── */
-
-
-
-/* CURRENCIES, COUNTRY_CURRENCY, fetchLiveRates(), detectCountryCurrency(),
-
-
-
-   and money() now live in currency.js (shared with product.html) — see
-
-
-
-   that file for the currency/geo-IP logic. */
-
-
-
-
-
-
-
 async function detectCurrency() {
-
-
-
   await Promise.allSettled([fetchLiveRates(), detectCountryCurrency()]);
-
-
-
   const badge = document.getElementById('ratesBadge');
-
-
-
   if (badge && ratesLoaded) { badge.textContent = '● live'; badge.style.color = '#4ade80'; }
-
-
-
   renderCurrencyPicker();
-
-
-
   render(products);
-
-
-
-  renderHeroPulse();
-
-
-
 }
-
-
-
-
-
-
 
 function renderCurrencyPicker() {
 
