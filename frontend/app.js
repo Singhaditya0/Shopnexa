@@ -57,7 +57,14 @@ const categoryGroups = [
 /* ── Currency detection & formatting ─────────────────────────────── */
 /* CURRENCIES, COUNTRY_CURRENCY, fetchLiveRates(), detectCountryCurrency(),
    and money() now live in currency.js (shared with product.html) — see
-   that file for the currency/geo-IP logic. */
+   that file for the currency/geo-IP logic.
+
+   FIX (Aug 2026): every money() call below now passes the product's
+   actual source currency (p.currency) as the second argument. Before,
+   money() was called with just the price and silently assumed it was
+   USD, which double-converted already-INR prices (e.g. a real ₹55,751
+   Flipkart price showing as ₹46,65,910). See currency.js for the full
+   explanation of the fix. */
 
 async function detectCurrency() {
   await Promise.allSettled([fetchLiveRates(), detectCountryCurrency()]);
@@ -151,7 +158,8 @@ grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
     ${money(
       p.sellerList && p.sellerList.length > 0
         ? Math.min(...p.sellerList.map(s => s.price))
-        : p.price
+        : p.price,
+      p.currency
     )}
   </span>
   <span class="price-was">${money(p.was, p.currency)}</span>
@@ -182,7 +190,7 @@ function sellerTickerHTML(p) {
     <div class="seller-ticker">
       ${sorted.map(s => `
         <span class="ticker-chip ${s.price === lowest ? 'best' : ''}">
-          ${s.name} <b>${money(s.price)}</b>
+          ${s.name} <b>${money(s.price, p.currency)}</b>
         </span>
       `).join('')}
     </div>
@@ -230,7 +238,7 @@ function openCompare(){
   document.getElementById('modalBody').innerHTML = `
     <table class="cmp-table">
       <tr><th>Spec</th>${items.map(p=>`<th>${p.name}</th>`).join('')}</tr>
-      <tr><td>Price</td>${items.map(p=>`<td class="pname">${money(p.price)}</td>`).join('')}</tr>
+      <tr><td>Price</td>${items.map(p=>`<td class="pname">${money(p.price, p.currency)}</td>`).join('')}</tr>
       <tr><td>Rating</td>${items.map(p=>`<td>★ ${p.rating} (${p.reviews})</td>`).join('')}</tr>
       ${allSpecKeys.map(k=>`<tr><td>${k}</td>${items.map(p=>`<td>${p.specs[k]||'—'}</td>`).join('')}</tr>`).join('')}
     </table>`;
@@ -298,6 +306,7 @@ document.getElementById('searchInput').addEventListener('input', e => {
     cat: p.category,
     price: lowestPrice, // Auto pick lowest price
     was: p.was ?? p.price,
+    currency: p.currency || 'INR',
     rating: p.rating ?? 0,
     reviews: p.reviews ?? 0,
     tag: p.tag || '',
@@ -383,7 +392,7 @@ function showOffers(id){
   const p = products.find(x => x.id === id);
   if(!p) return;
   const rows = (p.sellerList || []).map(s => `
-    <tr><td>${s.name || s.marketplace || '—'}</td><td>${money(s.price)}</td>
+    <tr><td>${s.name || s.marketplace || '—'}</td><td>${money(s.price, p.currency)}</td>
     <td><a href="${s.affiliateLink || '#'}" target="_blank" rel="noopener">Visit →</a></td></tr>
   `).join('');
   document.getElementById('offersModalBody').innerHTML = `
