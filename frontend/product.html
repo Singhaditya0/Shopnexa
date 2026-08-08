@@ -780,8 +780,8 @@ function renderProduct(p) {
   const sorted = [...sellers].sort((a,b) => a.price - b.price);
   const best = sorted[0];
 
-  document.getElementById('pdPriceNow').textContent = money(best.price);
-  document.getElementById('pdPriceWas').textContent = money(p.was);
+  document.getElementById('pdPriceNow').textContent = money(best.price, p.currency);
+  document.getElementById('pdPriceWas').textContent = money(p.was, p.currency);
   const saved = p.was - best.price;
   document.getElementById('pdPriceSave').textContent = saved > 0 ? `Save ${money(saved)}` : '';
   document.getElementById('pdSellerName').textContent = best.name;
@@ -806,7 +806,7 @@ function renderProduct(p) {
           </div>
         </td>
         <td>
-          <span class="offer-price ${isBest ? 'best' : ''}">${money(o.price)}</span>
+          <span class="offer-price ${isBest ? 'best' : ''}">${money(o.price, p.currency)}</span>
         </td>
         <td>
           <span class="offer-savings">Save ${savings} (${savePct}%)</span>
@@ -844,7 +844,7 @@ function renderProduct(p) {
         </div>
         <div class="related-body">
           <div class="related-name">${r.name}</div>
-          <div><span class="related-price">${money(r.price)}</span><span class="related-was">${money(r.was)}</span></div>
+          <div><span class="related-price">${money(r.price, r.currency)}</span><span class="related-was">${money(r.was, r.currency)}</span></div>
         </div>
       </div>
     `).join('')

@@ -154,7 +154,7 @@ grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
         : p.price
     )}
   </span>
-  <span class="price-was">${money(p.was)}</span>
+  <span class="price-was">${money(p.was, p.currency)}</span>
   <div class="store-badge">via ${p.seller}</div>
 </div>
   <label class="compare-check">

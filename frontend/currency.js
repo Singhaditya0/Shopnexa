@@ -1,28 +1,37 @@
-/* ── ShopNexa shared currency utilities ──────────────────────────────
-   Used by both index.html (via app.js) and product.html.
-   Previously this logic was duplicated in both places — now it lives
-   here once, so updating rates/currencies only needs one edit.
-*/
-
 const CURRENCIES = {
-  USD: { symbol: '$',  locale: 'en-US', rate: 1 },
-  INR: { symbol: '₹',  locale: 'en-IN', rate: 83.5 },
-  EUR: { symbol: '€',  locale: 'de-DE', rate: 0.92 },
-  GBP: { symbol: '£',  locale: 'en-GB', rate: 0.79 },
-  AUD: { symbol: 'A$', locale: 'en-AU', rate: 1.52 },
-  CAD: { symbol: 'C$', locale: 'en-CA', rate: 1.36 },
-  JPY: { symbol: '¥',  locale: 'ja-JP', rate: 149  },
-  AED: { symbol: 'AED ', locale: 'ar-AE', rate: 3.67 },
-  SGD: { symbol: 'S$', locale: 'en-SG', rate: 1.34 },
-  BRL: { symbol: 'R$', locale: 'pt-BR', rate: 4.97 },
+  USD: { symbol: '$',   locale: 'en-US', rate: 1 },
+  INR: { symbol: '₹',   locale: 'en-IN', rate: 95.2 },
+  EUR: { symbol: '€',   locale: 'de-DE', rate: 0.865 },
+  GBP: { symbol: '£',   locale: 'en-GB', rate: 0.741 },
+  AUD: { symbol: 'A$',  locale: 'en-AU', rate: 1.414 },
+  CAD: { symbol: 'C$',  locale: 'en-CA', rate: 1.40  },
+  JPY: { symbol: '¥',   locale: 'ja-JP', rate: 158.5 },
+  AED: { symbol: 'AED ',locale: 'ar-AE', rate: 3.6725 }, // fixed peg
+  SGD: { symbol: 'S$',  locale: 'en-SG', rate: 1.278 },
+  BRL: { symbol: 'R$',  locale: 'pt-BR', rate: 5.24 },
+  SAR: { symbol: 'SR ', locale: 'ar-SA', rate: 3.75 },   // fixed peg
+  // ── ADDED (Aug 2026) — major markets that were missing ──
+  CNY: { symbol: '¥',   locale: 'zh-CN', rate: 6.85 },   // China
+  MXN: { symbol: 'MX$', locale: 'es-MX', rate: 17.12 },  // Mexico
+  ZAR: { symbol: 'R',   locale: 'en-ZA', rate: 16.3 },   // South Africa
+  KRW: { symbol: '₩',   locale: 'ko-KR', rate: 1408 },   // South Korea
+  CHF: { symbol: 'CHF ',locale: 'de-CH', rate: 0.808 },  // Switzerland
+  IDR: { symbol: 'Rp',  locale: 'id-ID', rate: 17885 },  // Indonesia
+  PHP: { symbol: '₱',   locale: 'en-PH', rate: 60.82 },  // Philippines
+  MYR: { symbol: 'RM',  locale: 'ms-MY', rate: 4.09 },   // Malaysia
+  THB: { symbol: '฿',   locale: 'th-TH', rate: 33.02 },  // Thailand
+  NZD: { symbol: 'NZ$', locale: 'en-NZ', rate: 1.70 },   // New Zealand
 };
 
 // Map country codes → currency codes
 const COUNTRY_CURRENCY = {
   IN:'INR', US:'USD', CA:'CAD', GB:'GBP', AU:'AUD', NZ:'NZD',
   DE:'EUR', FR:'EUR', IT:'EUR', ES:'EUR', NL:'EUR', PT:'EUR',
-  AT:'EUR', BE:'EUR', GR:'EUR', FI:'EUR', IE:'EUR',
-  JP:'JPY', AE:'AED', SG:'SGD', BR:'BRL',
+  AT:'EUR', BE:'EUR', GR:'EUR', FI:'EUR', IE:'EUR', LU:'EUR',
+  JP:'JPY', AE:'AED', SG:'SGD', BR:'BRL', SA:'SAR',
+  // ── ADDED (Aug 2026) ──
+  CN:'CNY', MX:'MXN', ZA:'ZAR', KR:'KRW', CH:'CHF',
+  ID:'IDR', PH:'PHP', MY:'MYR', TH:'THB',
 };
 
 let activeCurrency = 'USD';
@@ -66,16 +75,34 @@ async function detectCountryCurrency() {
   else if (locale.endsWith('-CA')) activeCurrency = 'CAD';
 }
 
-function money(usdPrice) {
-  const c = CURRENCIES[activeCurrency] || CURRENCIES.USD;
-  const converted = usdPrice * c.rate;
+/**
+ * Format a price for display, converting from its ACTUAL source
+ * currency to the visitor's active currency.
+ *
+ * @param {number} price          the raw price as stored in the DB
+ * @param {string} sourceCurrency the currency that `price` is actually
+ *                                 in (e.g. product.currency — "INR",
+ *                                 "USD", "SAR", etc). Defaults to USD
+ *                                 for any old call sites that don't
+ *                                 pass it yet.
+ */
+function money(price, sourceCurrency = 'USD') {
+  const target = CURRENCIES[activeCurrency] || CURRENCIES.USD;
+  const source = CURRENCIES[(sourceCurrency || 'USD').toUpperCase()] || CURRENCIES.USD;
+
+  // Convert source → USD → target. If source === target, this is a no-op
+  // (dividing and multiplying by the same rate cancels out), so a
+  // product already in the visitor's currency is shown as-is.
+  const usdPrice = price / source.rate;
+  const converted = usdPrice * target.rate;
+
   try {
-    return new Intl.NumberFormat(c.locale, {
+    return new Intl.NumberFormat(target.locale, {
       style: 'currency', currency: activeCurrency,
       maximumFractionDigits: activeCurrency === 'JPY' ? 0 : 2,
       minimumFractionDigits: activeCurrency === 'JPY' ? 0 : 2,
     }).format(converted);
   } catch (e) {
-    return c.symbol + converted.toFixed(activeCurrency === 'JPY' ? 0 : 2);
+    return target.symbol + converted.toFixed(activeCurrency === 'JPY' ? 0 : 2);
   }
 }
