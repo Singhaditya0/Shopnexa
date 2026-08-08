@@ -13,28 +13,33 @@ def scrape_product_data(page, product_name):
     
     try:
         page.goto(search_url, timeout=30000, wait_until="domcontentloaded")
-        time.sleep(2)
+        time.sleep(1.5)
         
         html = page.content()
         soup = BeautifulSoup(html, 'html.parser')
         
-        cards = soup.select('.sh-dgr__content, .sh-pr__target, .sh-np__click-target')
+        # Multiple fallback selectors for Google Shopping cards
+        cards = soup.select('.sh-dgr__content, .sh-pr__target, .sh-np__click-target, .g, .I41Oof')
         
         if not cards:
-            print(f"  ❌ No results found for: {product_name}")
+            print(f"  ❌ No results found")
             return None
             
         first_card = cards[0]
         
+        # Extract Image
         img_tag = first_card.select_one('img')
         image_url = img_tag['src'] if img_tag and img_tag.has_attr('src') else "N/A"
         
-        price_tag = first_card.select_one('.a88f2c, .offence, .a98f2c, .u3fB9e, span[aria-hidden="true"]')
+        # Extract Price (multiple fallback selectors)
+        price_tag = first_card.select_one('.a88f2c, .offence, .a98f2c, .u3fB9e, .H8932e, span[aria-hidden="true"]')
         lowest_price = price_tag.text.strip() if price_tag else "N/A"
         
-        store_tag = first_card.select_one('.aUL09e, .I3012e, .E5A16b')
-        best_store = store_tag.text.strip() if store_tag else "N/A"
+        # Extract Merchant / Store
+        store_tag = first_card.select_one('.aUL09e, .I3012e, .E5A16b, .d39e2e')
+        best_store = store_tag.text.strip() if store_tag else "Google Shopping"
         
+        # Extract Direct Buy Link
         link_tag = first_card.select_one('a')
         if link_tag and link_tag.has_attr('href'):
             href = link_tag['href']
@@ -57,18 +62,15 @@ def scrape_product_data(page, product_name):
         return None
 
 def run():
-    target_input = INPUT_FILE if os.path.exists(INPUT_FILE) else "multi_store_price_comparison_sample.csv"
-    
-    if not os.path.exists(target_input):
-        print(f"❌ Error: Neither '{INPUT_FILE}' nor sample CSV file found!")
+    if not os.path.exists(INPUT_FILE):
+        print(f"❌ Error: '{INPUT_FILE}' file nahi mili!")
         return
 
-    df_input = pd.read_csv(target_input)
-    col = "Product_Name" if "Product_Name" in df_input.columns else "Exact_Product_Name"
-    products = df_input[col].tolist()
+    df_input = pd.read_csv(INPUT_FILE)
+    products = df_input["Product_Name"].tolist()
 
-    print(f"Using File: {target_input}")
-    print(f"Total Products to Scrape: {len(products)}\n" + "="*40)
+    print(f"🚀 Starting Clean Search for {len(products)} Products...")
+    print("="*40)
 
     all_data = []
 
@@ -86,14 +88,14 @@ def run():
 
             if idx % 25 == 0:
                 pd.DataFrame(all_data).to_csv(OUTPUT_FILE, index=False, encoding='utf-8-sig')
-                print(f"\n--- 💾 Checkpoint Saved: {idx}/{len(products)} Products Complete ---\n")
+                print(f"\n--- 💾 Progress Saved: {idx}/{len(products)} Products Complete ---\n")
 
         browser.close()
 
     df_output = pd.DataFrame(all_data)
     df_output.to_csv(OUTPUT_FILE, index=False, encoding='utf-8-sig')
     print("\n" + "="*40)
-    print(f"🎉 SUCCESS! Saved to '{OUTPUT_FILE}'")
+    print(f"🎉 SUCCESS! All {len(df_output)} products scraped & saved to '{OUTPUT_FILE}'")
 
 if __name__ == "__main__":
     run()
