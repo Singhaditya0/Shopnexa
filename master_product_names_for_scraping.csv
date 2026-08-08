@@ -1,11 +1,35 @@
-﻿Product_ID,Product_Name,Category,Image_URL,Amazon_Price,Flipkart_Price,eBay_Price,Meesho_Price,Myntra_Price,AliExpress_Price,Rating,Lowest_Price,Best_Store
-ELE-001,Apple iPhone 15 (128 GB) - Black,Mobiles & Electronics,https://m.media-amazon.com/images/I/71657TiFeHL._SL1500_.jpg,71990,69999,74000,,,72500.0,4.6,69999.0,Flipkart
-ELE-002,"Samsung Galaxy S23 5G (Phantom Black, 8GB RAM, 256GB Storage)",Mobiles & Electronics,https://m.media-amazon.com/images/I/61RZdb2DD3L._SL1500_.jpg,52999,51999,55000,,,53000.0,4.5,51999.0,Flipkart
-ELE-003,boAt Airdopes 141 Bluetooth Truly Wireless Earbuds,Audio & Headphones,https://m.media-amazon.com/images/I/41O-b0e6eSL._SL1100_.jpg,1299,1099,1499,1150.0,1299.0,,4.1,1099.0,Flipkart
-ELE-004,"OnePlus Nord CE 3 Lite 5G (Pastel Lime, 8GB RAM, 128GB Storage)",Mobiles & Electronics,https://m.media-amazon.com/images/I/61QRgOgBx0L._SL1500_.jpg,17999,17499,18500,,,18000.0,4.3,17499.0,Flipkart
-ELE-005,Sony WH-1000XM5 Wireless Noise Canceling Headphones,Audio & Headphones,https://m.media-amazon.com/images/I/61+btxzpfDL._SL1500_.jpg,29990,28990,31000,,,29500.0,4.7,28990.0,Flipkart
-ELE-006,"Apple iPad 10th Generation (Wi-Fi, 64GB) - Blue",Mobiles & Electronics,https://m.media-amazon.com/images/I/61uA2UVnYWL._SL1500_.jpg,34900,33990,36000,,,35000.0,4.6,33990.0,Flipkart
-FAS-001,Nike Men Revolution 6 Running Shoes,Footwear,https://m.media-amazon.com/images/I/71f2K6p8qAL._UL1500_.jpg,2495,2295,2800,,2199.0,,4.2,2199.0,Myntra
-FAS-002,Puma Men Dazzler Sneakers,Footwear,https://m.media-amazon.com/images/I/51wXpMv-1IL._UL1200_.jpg,1799,1699,2100,,1599.0,,4.0,1599.0,Myntra
-WAT-001,Noise ColorFit Pulse 2 Max Smart Watch,Smartwatches,https://m.media-amazon.com/images/I/61sslwTctBL._SL1500_.jpg,1499,1299,1600,1199.0,1399.0,,4.1,1199.0,Meesho
-WAT-002,Fire-Boltt Ninja Call Pro Plus Smart Watch,Smartwatches,https://m.media-amazon.com/images/I/61AHiYyu3ZL._SL1500_.jpg,1299,1199,1500,1099.0,1249.0,,4.2,1099.0,Meesho
+Product_Name
+Apple iPhone 15
+Apple iPhone 14
+Apple iPhone 13
+Samsung Galaxy S24
+Samsung Galaxy S23
+OnePlus Nord 3
+OnePlus 12R
+Realme 12 Pro
+Redmi Note 13 Pro
+Poco X6 Pro
+Vivo V30
+MacBook Air M2
+MacBook Air M3
+Dell XPS 13
+HP Pavilion 15
+Lenovo IdeaPad Slim 3
+Asus Vivobook 15
+Acer Nitro 5
+boAt Airdopes 141
+boAt Rockerz 255
+Sony WH-1000XM5
+JBL Wave 200
+Noise Buds VS102
+Realme Buds Air 5
+Noise ColorFit Pulse 2
+Fire-Boltt Ninja Call
+boAt Wave Call
+Apple Watch Series 9
+Samsung Galaxy Watch 6
+Nike Revolution 6
+Nike Air Force 1
+Puma Dazzler
+Adidas Runfalcon 3
+Woodland Leather Shoes

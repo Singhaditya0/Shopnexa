@@ -12,6 +12,23 @@ if not API_KEY:
 INPUT_FILE = "master_product_names_for_scraping.csv"
 OUTPUT_FILE = "my_website_products_final.csv"
 
+EXCLUDE_KEYWORDS = [
+    "case", "cover", "protector", "charger", "cable", "screen guard",
+    "strap", "adapter", "tempered glass", "skin", "sticker", "pouch",
+    "holder", "stand", "band", "back cover", "flip cover", "bumper",
+    "refurbished", "renewed", "used", "second hand",
+    "neckband", "combo", "bundle", "spare part"
+]
+
+def is_accessory(title):
+    title_lower = title.lower()
+    return any(kw in title_lower for kw in EXCLUDE_KEYWORDS)
+
+def is_relevant_match(title, product_name):
+    title_lower = title.lower()
+    product_tokens = product_name.lower().split()
+    return all(tok in title_lower for tok in product_tokens)
+
 def fetch_multi_store_prices(product_name):
     print(f"Searching: {product_name} ...")
 
@@ -35,17 +52,31 @@ def fetch_multi_store_prices(product_name):
     stores_price = {"Amazon": None, "Flipkart": None, "eBay": None, "Meesho": None, "Myntra": None}
     stores_link = {"Amazon": None, "Flipkart": None, "eBay": None, "Meesho": None, "Myntra": None}
     image_url = ""
+    skipped_accessories = 0
+    skipped_mismatch = 0
 
     for item in shopping_results:
         source = item.get("source", "").lower()
+        title = item.get("title", "")
+
+        if is_accessory(title):
+            skipped_accessories += 1
+            continue
+
+        if not is_relevant_match(title, product_name):
+            skipped_mismatch += 1
+            continue
 
         price_val = item.get("extracted_price")
         if not price_val and item.get("price"):
-            raw_p = str(item.get("price")).replace("rupee_sign", "").replace(",", "").strip()
+            raw_p = str(item.get("price")).replace("₹", "").replace(",", "").strip()
             try:
                 price_val = float(raw_p)
             except:
                 price_val = None
+
+        if price_val is not None and price_val < 300:
+            continue
 
         product_link = item.get("product_link") or item.get("link") or item.get("merchant_link")
 
@@ -56,6 +87,9 @@ def fetch_multi_store_prices(product_name):
             if store.lower() in source and stores_price[store] is None:
                 stores_price[store] = price_val
                 stores_link[store] = product_link
+
+    if skipped_accessories or skipped_mismatch:
+        print(f"  (Skipped {skipped_accessories} accessories, {skipped_mismatch} mismatched products)")
 
     valid_prices = {k: v for k, v in stores_price.items() if v is not None}
 
