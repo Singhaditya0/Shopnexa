@@ -1,20 +1,3 @@
-/* ShopNexa — Multi-Marketplace Price Comparison
-   
-   NOW: Each product has `offers` array [{marketplace, price, url}]
-   All prices stored in USD. Frontend converts to user's local currency.
-   
-   Supported currencies (auto-detect by country):
-   US/Default: $ USD (rate: 1)
-   India: ₹ INR (rate: 83.5)
-   UK: £ GBP (rate: 0.79)
-   EU: € EUR (rate: 0.92)
-   Australia: A$ AUD (rate: 1.52)
-   Canada: C$ CAD (rate: 1.36)
-   Japan: ¥ JPY (rate: 150)
-   Sweden: kr SEK (rate: 10.5)
-   Switzerland: CHF (rate: 0.88)
-*/
-
 const categoryGroups = [
   {
     key: "fashion",

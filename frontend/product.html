@@ -614,8 +614,11 @@ const categoryGroups = [
   { group: 'Beauty & Personal Care', open: true, items: [
     { key: 'beauty', icon: '💄', label: 'Beauty & Personal Care' }
   ]},
-  { group: 'Electronics & Home', open: true, items: [
-    { key: 'electronics', icon: '💻', label: 'Electronics & Home' }
+  { group: 'Electronics', open: true, items: [
+    { key: 'electronics', icon: '💻', label: 'Electronics' }
+  ]},
+  { group: 'Home', open: true, items: [
+    { key: 'home', icon: '🏠', label: 'Home' }
   ]},
   { group: 'Kids', open: true, items: [
     { key: 'kids', icon: '🧸', label: 'Kids' }
@@ -626,6 +629,15 @@ const categoryGroups = [
 ];
 
 let products = [];
+
+/* Convert any price to USD using its own source currency, so offers in
+   different currencies can be safely compared to find the true lowest —
+   comparing raw numbers across currencies (e.g. $16.99 vs ₹2224) gives
+   wrong results without this. */
+function toUSD(price, currency) {
+  const c = CURRENCIES[(currency || 'USD').toUpperCase()] || CURRENCIES.USD;
+  return price / c.rate;
+}
 
 /* ── CURRENCY ──────────────────────────────────────────── */
 async function initCurrency() {
@@ -755,14 +767,14 @@ function renderProduct(p) {
   document.getElementById('prodTag2').textContent = p.tag;
 
   // Agar koi seller offer nahi hai, safe fallback
-  const sellers = (p.sellerList && p.sellerList.length) ? p.sellerList : [{ name: 'Default', price: p.price, affiliateLink: '#' }];
-  const sorted = [...sellers].sort((a,b) => a.price - b.price);
+  const sellers = (p.sellerList && p.sellerList.length) ? p.sellerList : [{ name: 'Default', price: p.price, currency: p.currency, affiliateLink: '#' }];
+  const sorted = [...sellers].sort((a,b) => toUSD(a.price, a.currency) - toUSD(b.price, b.currency));
   const best = sorted[0];
 
-  document.getElementById('pdPriceNow').textContent = money(best.price, p.currency);
+  document.getElementById('pdPriceNow').textContent = money(best.price, best.currency);
   document.getElementById('pdPriceWas').textContent = money(p.was, p.currency);
-  const saved = p.was - best.price;
-  document.getElementById('pdPriceSave').textContent = saved > 0 ? `Save ${money(saved)}` : '';
+  const savedUSD = toUSD(p.was, p.currency) - toUSD(best.price, best.currency);
+  document.getElementById('pdPriceSave').textContent = savedUSD > 0 ? `Save ${money(savedUSD, 'USD')}` : '';
   document.getElementById('pdSellerName').textContent = best.name;
   document.getElementById('prodPillBest').style.display = 'inline-block';
 
@@ -770,11 +782,14 @@ function renderProduct(p) {
   mainBtn.textContent = `Buy on ${best.name}  →`;
   mainBtn.onclick = () => doRedirect(best.affiliateLink, best.name);
 
+  const wasUSD = toUSD(p.was, p.currency);
   const tbody = document.getElementById('offersTbody');
   tbody.innerHTML = sorted.map((o, i) => {
     const isBest = i === 0;
-    const savings = money(p.was - o.price);
-    const savePct = p.was ? Math.round(((p.was - o.price) / p.was) * 100) : 0;
+    const oUSD = toUSD(o.price, o.currency);
+    const savingsUSD = wasUSD - oUSD;
+    const savings = money(savingsUSD, 'USD');
+    const savePct = wasUSD ? Math.round((savingsUSD / wasUSD) * 100) : 0;
     return `
       <tr class="${isBest ? 'best-offer' : ''}">
         <td>
@@ -785,7 +800,7 @@ function renderProduct(p) {
           </div>
         </td>
         <td>
-          <span class="offer-price ${isBest ? 'best' : ''}">${money(o.price, p.currency)}</span>
+          <span class="offer-price ${isBest ? 'best' : ''}">${money(o.price, o.currency)}</span>
         </td>
         <td>
           <span class="offer-savings">Save ${savings} (${savePct}%)</span>

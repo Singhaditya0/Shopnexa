@@ -77,6 +77,27 @@ async function detectCurrency() {
   render(products);
 }
 
+/* Convert any price to USD using its own source currency, so prices in
+   different currencies (₹2224 vs $16.99) can be safely compared to find
+   the true lowest offer — comparing raw numbers across currencies gives
+   wrong results (e.g. $16.99 looking "lower" than ₹2224 even though it
+   isn't once converted). */
+function toUSD(price, currency) {
+  const c = CURRENCIES[(currency || 'USD').toUpperCase()] || CURRENCIES.USD;
+  return price / c.rate;
+}
+
+/* Finds the seller with the lowest price after converting everything to
+   USD first. Returns the full seller object (so its own price + currency
+   can be displayed correctly), or null if there are no sellers. */
+function lowestSeller(p) {
+  if (!p.sellerList || p.sellerList.length === 0) return null;
+  return p.sellerList.reduce((best, s) => {
+    if (!best) return s;
+    return toUSD(s.price, s.currency) < toUSD(best.price, best.currency) ? s : best;
+  }, null);
+}
+
 function renderCurrencyPicker() {
   const existing = document.getElementById('currencyPicker');
   if (existing) { existing.value = activeCurrency; return; }
@@ -144,8 +165,10 @@ grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
       <div class="thumb" style="background:linear-gradient(135deg, ${p.grad}); cursor:pointer;" onclick="location.href='product.html?id=${p.id}'">
         <span class="tag">${p.tag}</span>
         ${(() => {
-          const lowest = p.sellerList && p.sellerList.length > 0 ? Math.min(...p.sellerList.map(s => s.price)) : p.price;
-          const pct = p.was > lowest ? Math.round(((p.was - lowest) / p.was) * 100) : 0;
+          const best = lowestSeller(p);
+          const lowestUSD = best ? toUSD(best.price, best.currency) : toUSD(p.price, p.currency);
+          const wasUSD = toUSD(p.was, p.currency);
+          const pct = wasUSD > lowestUSD ? Math.round(((wasUSD - lowestUSD) / wasUSD) * 100) : 0;
           return pct > 0 ? `<span class="discount-badge">-${pct}%</span>` : '';
         })()}
         <div class="wish ${wishlist.has(p.id)?'active':''}" onclick="event.stopPropagation(); toggleWish('${p.id}')">${wishlist.has(p.id)?'♥':'♡'}</div>
@@ -158,12 +181,7 @@ grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
         <div class="card-foot">
   <div>
   <span class="price-now">
-    ${money(
-      p.sellerList && p.sellerList.length > 0
-        ? Math.min(...p.sellerList.map(s => s.price))
-        : p.price,
-      p.currency
-    )}
+    ${money(bestSellerPrice(p), bestSellerCurrency(p))}
   </span>
   <span class="price-was">${money(p.was, p.currency)}</span>
   <div class="store-badge">via ${p.seller}</div>
@@ -179,21 +197,25 @@ ${sellerTickerHTML(p)}
   `).join('');
 }
 function bestSellerPrice(p) {
-  if (!p.sellerList || p.sellerList.length === 0) return p.price;
-  return Math.min(...p.sellerList.map(s => s.price));
+  const best = lowestSeller(p);
+  return best ? best.price : p.price;
+}
+function bestSellerCurrency(p) {
+  const best = lowestSeller(p);
+  return best ? best.currency : p.currency;
 }
 
 function sellerTickerHTML(p) {
   if (!p.sellerList || p.sellerList.length === 0) return '';
 
-  const sorted = [...p.sellerList].sort((a, b) => a.price - b.price);
-  const lowest = sorted[0].price;
+  const sorted = [...p.sellerList].sort((a, b) => toUSD(a.price, a.currency) - toUSD(b.price, b.currency));
+  const lowestUSD = toUSD(sorted[0].price, sorted[0].currency);
 
   return `
     <div class="seller-ticker">
       ${sorted.map(s => `
-        <span class="ticker-chip ${s.price === lowest ? 'best' : ''}">
-          ${s.name} <b>${money(s.price, p.currency)}</b>
+        <span class="ticker-chip ${toUSD(s.price, s.currency) === lowestUSD ? 'best' : ''}">
+          ${s.name} <b>${money(s.price, s.currency)}</b>
         </span>
       `).join('')}
     </div>
@@ -395,7 +417,7 @@ function showOffers(id){
   const p = products.find(x => x.id === id);
   if(!p) return;
   const rows = (p.sellerList || []).map(s => `
-    <tr><td>${s.name || s.marketplace || '—'}</td><td>${money(s.price, p.currency)}</td>
+    <tr><td>${s.name || s.marketplace || '—'}</td><td>${money(s.price, s.currency)}</td>
     <td><a href="${s.affiliateLink || '#'}" target="_blank" rel="noopener">Visit →</a></td></tr>
   `).join('');
   document.getElementById('offersModalBody').innerHTML = `
