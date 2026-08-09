@@ -160,12 +160,14 @@ document.getElementById("apUnitCount").value = "1";
     const store = row.querySelector(".of-store").value.trim();
     const offerPrice = row.querySelector(".of-price").value;
     const offerUnits = row.querySelector(".of-units").value || 1;  // NEW
+    const offerCurrency = row.querySelector(".of-currency").value || "INR";  // NEW
     const url = row.querySelector(".of-url").value.trim();
 
     if (store && offerPrice && url) {
       offers.push({
         store: store,
         price: Number(offerPrice),
+        currency: offerCurrency,   // NEW
         url: url,
         unitCount: Number(offerUnits)   // NEW
       });
@@ -203,6 +205,7 @@ document.getElementById("apUnitCount").value = "1";
       document.getElementById("apBrand").value = "";
       document.getElementById("apImage").value = "";
       document.querySelectorAll(".offer-row input").forEach(inpt => inpt.value = "");
+      document.querySelectorAll(".offer-row select.of-currency").forEach(sel => sel.value = "INR");  // NEW
       
       editingProductId = null;
       document.getElementById("addProductBtn").textContent = "Add Product";

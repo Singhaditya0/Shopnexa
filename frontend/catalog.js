@@ -15,6 +15,7 @@ export async function loadCatalog() {
         return {
           name: o.store,
           price: +(o.price / units).toFixed(2),   // ← divide by units
+          currency: o.currency || p.currency || 'INR',   // ← NEW: offer ka apna currency
           affiliateLink: o.url
         };
       });
