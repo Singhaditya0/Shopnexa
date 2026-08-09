@@ -43,8 +43,11 @@ const categoryGroups = [
   { group: 'Beauty & Personal Care', open: true, items: [
     { key: 'beauty', icon: '💄', label: 'Beauty & Personal Care' }
   ]},
-  { group: 'Electronics & Home', open: true, items: [
-    { key: 'electronics', icon: '💻', label: 'Electronics & Home' }
+  { group: 'Electronics', open: true, items: [
+    { key: 'electronics', icon: '💻', label: 'Electronics' }
+  ]},
+  { group: 'Home', open: true, items: [
+    { key: 'home', icon: '🏠', label: 'Home' }
   ]},
   { group: 'Kids', open: true, items: [
     { key: 'kids', icon: '🧸', label: 'Kids' }
