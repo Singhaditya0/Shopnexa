@@ -46,8 +46,8 @@ const categoryGroups = [
   { group: 'Electronics', open: true, items: [
     { key: 'electronics', icon: '💻', label: 'Electronics' }
   ]},
-  { group: 'Home', open: true, items: [
-    { key: 'home', icon: '🏠', label: 'Home' }
+  { group: 'Home & Kitchen', open: true, items: [
+    { key: 'home', icon: '🏠', label: 'Home & Kitchen' }
   ]},
   { group: 'Kids', open: true, items: [
     { key: 'kids', icon: '🧸', label: 'Kids' }
