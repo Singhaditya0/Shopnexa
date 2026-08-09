@@ -17,6 +17,7 @@ const productSchema = new mongoose.Schema(
         {
           store: String,
           price: Number,
+          currency: { type: String, default: "INR" },   // ← NEW: is offer ka apna currency
           url: String,
           unitCount: { type: Number, default: 1 },   // ← NEW: offer price kitne units ki hai
         },
