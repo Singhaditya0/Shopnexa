@@ -27,122 +27,90 @@
 
 <div class="admin-wrap">
   <h2 class="section-title">Dashboard</h2>
-<div class="admin-stats" id="statsGrid"></div>
+  <div class="admin-stats" id="statsGrid"></div>
   <div id="detailList" style="margin-top: 20px;"></div>
-  <h2 class="section-title">Add Product</h2>
- <h2 class="section-title">Add New Product</h2>
+
+  <h2 class="section-title">Add New Product</h2>
   <div class="add-form" style="display: flex; flex-direction: column; gap: 12px; max-width: 700px; background: var(--surface); padding: 20px; border-radius: 12px; border: 1px solid var(--border-mid);">
-    
+
     <!-- Basic Details -->
     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
       <input id="apName" placeholder="Product Name" style="flex: 1; min-width: 200px;">
       <input id="apBrand" placeholder="Brand" style="flex: 1; min-width: 150px;">
     </div>
-    
+
     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
       <input id="apCategory" placeholder="Category (e.g., electronics, fashion)" style="flex: 1;">
       <input id="apPrice" type="number" placeholder="Base Price (₹)" style="flex: 1;">
+      <input id="apUnitCount" type="number" placeholder="Units (e.g. 1, 4, 6)" value="1" style="width: 100px;">
     </div>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-  <input id="apCategory" placeholder="Category (e.g., electronics, fashion)" style="flex: 1;">
-  <input id="apPrice" type="number" placeholder="Base Price (₹)" style="flex: 1;">
-  <input id="apUnitCount" type="number" placeholder="Units (e.g. 1, 4, 6)" value="1" style="width: 100px;">
-</div>
-    
+
     <input id="apImage" placeholder="Product Image URL (e.g., https://.../img.jpg)" style="width: 100%;">
 
     <!-- Store Links / Offers Section -->
     <h4 style="margin-top: 15px; color: var(--text-muted); font-size: 13px; text-transform: uppercase;">Store Offers & Links (Add up to 7)</h4>
-    
+
     <!-- Offer 1 -->
     <div class="offer-row" style="display: flex; gap: 8px;">
       <input class="of-store" placeholder="Store 1" style="flex: 1;">
       <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
+      <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
       <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
     </div>
-    <div class="offer-row" style="display: flex; gap: 8px;">
-  <input class="of-store" placeholder="Store 1" style="flex: 1;">
-  <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
-  <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
-  <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
-</div>
+
     <!-- Offer 2 -->
     <div class="offer-row" style="display: flex; gap: 8px;">
       <input class="of-store" placeholder="Store 2" style="flex: 1;">
       <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
+      <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
       <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
     </div>
-    <div class="offer-row" style="display: flex; gap: 8px;">
-  <input class="of-store" placeholder="Store 1" style="flex: 1;">
-  <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
-  <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
-  <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
-</div>
+
     <!-- Offer 3 -->
     <div class="offer-row" style="display: flex; gap: 8px;">
       <input class="of-store" placeholder="Store 3" style="flex: 1;">
       <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
+      <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
       <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
     </div>
-<div class="offer-row" style="display: flex; gap: 8px;">
-  <input class="of-store" placeholder="Store 1" style="flex: 1;">
-  <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
-  <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
-  <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
-</div>
+
     <!-- Offer 4 -->
     <div class="offer-row" style="display: flex; gap: 8px;">
       <input class="of-store" placeholder="Store 4" style="flex: 1;">
       <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
+      <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
       <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
     </div>
-<div class="offer-row" style="display: flex; gap: 8px;">
-  <input class="of-store" placeholder="Store 1" style="flex: 1;">
-  <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
-  <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
-  <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
-</div>
+
     <!-- Offer 5 -->
     <div class="offer-row" style="display: flex; gap: 8px;">
       <input class="of-store" placeholder="Store 5" style="flex: 1;">
       <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
+      <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
       <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
     </div>
-<div class="offer-row" style="display: flex; gap: 8px;">
-  <input class="of-store" placeholder="Store 1" style="flex: 1;">
-  <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
-  <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
-  <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
-</div>
+
     <!-- Offer 6 -->
     <div class="offer-row" style="display: flex; gap: 8px;">
       <input class="of-store" placeholder="Store 6" style="flex: 1;">
       <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
+      <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
       <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
     </div>
-<div class="offer-row" style="display: flex; gap: 8px;">
-  <input class="of-store" placeholder="Store 1" style="flex: 1;">
-  <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
-  <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
-  <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
-</div>
+
     <!-- Offer 7 -->
     <div class="offer-row" style="display: flex; gap: 8px;">
       <input class="of-store" placeholder="Store 7" style="flex: 1;">
       <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
+      <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
       <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
     </div>
-<div class="offer-row" style="display: flex; gap: 8px;">
-  <input class="of-store" placeholder="Store 1" style="flex: 1;">
-  <input class="of-price" type="number" placeholder="Price" style="width: 100px;">
-  <input class="of-units" type="number" placeholder="Units" value="1" style="width: 70px;">
-  <input class="of-url" placeholder="Direct URL Link" style="flex: 2;">
-</div>
+
     <button class="pd-buy-btn primary" id="addProductBtn" style="width: 100%; padding: 12px; margin-top: 10px;">➕ Add Product to Database</button>
   </div>
 
   <h2 class="section-title">Products</h2>
-<input id="adminSearchInput" type="text" placeholder="Search products by name..." style="width:100%; max-width:400px; padding:10px 14px; margin-bottom:14px; border-radius:9px; border:1px solid var(--border-mid); background:var(--surface-2); color:var(--text); font-size:14px;">
+  <input id="adminSearchInput" type="text" placeholder="Search products by name..." style="width:100%; max-width:400px; padding:10px 14px; margin-bottom:14px; border-radius:9px; border:1px solid var(--border-mid); background:var(--surface-2); color:var(--text); font-size:14px;">
   <div id="productList"></div>
 </div>
 
