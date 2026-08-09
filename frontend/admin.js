@@ -144,6 +144,7 @@ document.getElementById("addProductBtn").addEventListener("click", async () => {
   const name = document.getElementById("apName").value.trim();
   const category = document.getElementById("apCategory").value.trim();
   const price = document.getElementById("apPrice").value;
+  const currency = document.getElementById("apCurrency").value || "INR";  // NEW
   const unitCount = document.getElementById("apUnitCount").value || 1;
   const brand = document.getElementById("apBrand").value.trim();
   const image = document.getElementById("apImage").value.trim();
@@ -181,6 +182,7 @@ document.getElementById("apUnitCount").value = "1";
   const body = { 
     name, category, 
     price: Number(price), 
+    currency,   // NEW
     unitCount: Number(unitCount),   // NEW
     brand, 
     images: image ? [image] : [] 
@@ -202,6 +204,7 @@ document.getElementById("apUnitCount").value = "1";
       document.getElementById("apName").value = "";
       document.getElementById("apCategory").value = "";
       document.getElementById("apPrice").value = "";
+      document.getElementById("apCurrency").value = "INR";  // NEW
       document.getElementById("apBrand").value = "";
       document.getElementById("apImage").value = "";
       document.querySelectorAll(".offer-row input").forEach(inpt => inpt.value = "");

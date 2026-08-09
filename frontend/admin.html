@@ -41,7 +41,16 @@
 
     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
       <input id="apCategory" placeholder="Category (e.g., electronics, fashion)" style="flex: 1;">
-      <input id="apPrice" type="number" placeholder="Base Price (₹)" style="flex: 1;">
+      <input id="apPrice" type="number" placeholder="Base Price" style="flex: 1;">
+      <select id="apCurrency" style="width: 90px;">
+        <option value="INR">₹ INR</option>
+        <option value="USD">$ USD</option>
+        <option value="SAR">SR SAR</option>
+        <option value="AED">AED</option>
+        <option value="EUR">€ EUR</option>
+        <option value="GBP">£ GBP</option>
+        <option value="CNY">¥ CNY</option>
+      </select>
       <input id="apUnitCount" type="number" placeholder="Units (e.g. 1, 4, 6)" value="1" style="width: 100px;">
     </div>
 
