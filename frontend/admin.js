@@ -117,6 +117,24 @@ document.getElementById("adminSearchInput").addEventListener("input", (e) => {
   }, 300);
 });
 
+// NEW: fills the category <select> from the Category collection
+async function loadCategoryOptions() {
+  try {
+    const res = await fetch(`${API}/categories`);
+    const data = await res.json();
+    if (!data.success) return;
+
+    const sel = document.getElementById("apCategory");
+    const current = sel.value;
+    sel.innerHTML = `<option value="">Select Category</option>` +
+      data.data.map(c => `<option value="${c.name}">${c.name}</option>`).join("");
+    if (current) sel.value = current;
+  } catch (err) {
+    console.error("Load categories error:", err);
+  }
+}
+window.loadCategoryOptions = loadCategoryOptions;
+
 function editProduct(id, name, category, price, brand, image) {
   editingProductId = id;
 
@@ -144,11 +162,11 @@ document.getElementById("addProductBtn").addEventListener("click", async () => {
   const name = document.getElementById("apName").value.trim();
   const category = document.getElementById("apCategory").value.trim();
   const price = document.getElementById("apPrice").value;
-  const currency = document.getElementById("apCurrency").value || "INR";  // NEW
+  const currency = document.getElementById("apCurrency").value || "INR";
   const unitCount = document.getElementById("apUnitCount").value || 1;
   const brand = document.getElementById("apBrand").value.trim();
   const image = document.getElementById("apImage").value.trim();
-document.getElementById("apUnitCount").value = "1";
+  document.getElementById("apUnitCount").value = "1";
   if (!name || !category || !price) { 
     showToast("Name, Category, and Base Price are required!"); 
     return; 
@@ -160,17 +178,17 @@ document.getElementById("apUnitCount").value = "1";
   offerRows.forEach(row => {
     const store = row.querySelector(".of-store").value.trim();
     const offerPrice = row.querySelector(".of-price").value;
-    const offerUnits = row.querySelector(".of-units").value || 1;  // NEW
-    const offerCurrency = row.querySelector(".of-currency").value || "INR";  // NEW
+    const offerUnits = row.querySelector(".of-units").value || 1;
+    const offerCurrency = row.querySelector(".of-currency").value || "INR";
     const url = row.querySelector(".of-url").value.trim();
 
     if (store && offerPrice && url) {
       offers.push({
         store: store,
         price: Number(offerPrice),
-        currency: offerCurrency,   // NEW
+        currency: offerCurrency,
         url: url,
-        unitCount: Number(offerUnits)   // NEW
+        unitCount: Number(offerUnits)
       });
     }
   });
@@ -182,8 +200,8 @@ document.getElementById("apUnitCount").value = "1";
   const body = { 
     name, category, 
     price: Number(price), 
-    currency,   // NEW
-    unitCount: Number(unitCount),   // NEW
+    currency,
+    unitCount: Number(unitCount),
     brand, 
     images: image ? [image] : [] 
   };
@@ -204,11 +222,11 @@ document.getElementById("apUnitCount").value = "1";
       document.getElementById("apName").value = "";
       document.getElementById("apCategory").value = "";
       document.getElementById("apPrice").value = "";
-      document.getElementById("apCurrency").value = "INR";  // NEW
+      document.getElementById("apCurrency").value = "INR";
       document.getElementById("apBrand").value = "";
       document.getElementById("apImage").value = "";
       document.querySelectorAll(".offer-row input").forEach(inpt => inpt.value = "");
-      document.querySelectorAll(".offer-row select.of-currency").forEach(sel => sel.value = "INR");  // NEW
+      document.querySelectorAll(".offer-row select.of-currency").forEach(sel => sel.value = "INR");
       
       editingProductId = null;
       document.getElementById("addProductBtn").textContent = "Add Product";
@@ -226,3 +244,4 @@ document.getElementById("apUnitCount").value = "1";
 
 loadStats();
 loadProducts();
+loadCategoryOptions();
