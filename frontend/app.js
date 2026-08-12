@@ -19,7 +19,7 @@ async function toggleWishBackend(id) {
   if (!token) { window.location.href = "login.html"; return; }
 
   const method = wishlist.has(id) ? "DELETE" : "POST";
-  await fetch(`http://localhost:5000/api/wishlist/${id}`, { method, headers: authHeader() });
+  await fetch(`https://ShopNexa-backend.onrender.com/api/wishlist/${id}`, { method, headers: authHeader() });
 }
 let wishlist = new Set();
 let compareSet = new Set();
@@ -385,7 +385,7 @@ document.getElementById('themeToggle').addEventListener('click', () => {
 });
 
 document.getElementById('wishNavBtn').addEventListener('click', () => {
-  showToast(wishlist.size ? `You have ${wishlist.size} item(s) wishlisted.` : 'Your wishlist is empty — tap the ♡ on any product.');
+  window.location.href = 'wishlist.html';
 });
 
 document.getElementById('modalOverlay').addEventListener('click', e => { if(e.target.id==='modalOverlay') closeCompare(); });

@@ -15,12 +15,14 @@ export async function loadCatalog() {
         return {
           name: o.store,
           price: +(o.price / units).toFixed(2),   // ← divide by units
-          currency: o.currency || p.currency || 'INR',   // ← NEW: offer ka apna currency
+          currency: o.currency || p.currency || 'INR',   // ← offer ka apna currency
           affiliateLink: o.url
         };
       });
 
       const baseUnits = p.unitCount && p.unitCount > 0 ? p.unitCount : 1;
+
+      const lowestSeller = getLowestPriceSeller(sellerList);
 
       return {
         id: p._id,
@@ -34,7 +36,7 @@ export async function loadCatalog() {
         images: p.images || [],
         specs: p.specs || {},
         sellerList,
-        seller: sellerList[0]?.name || 'Multiple sellers',
+        seller: lowestSeller?.name || 'Multiple sellers',   // ← FIXED
         rating: p.rating ?? 0,
         reviews: p.reviews ?? 0,
         tag: p.tag || (p.isFeatured ? 'Featured' : ''),
