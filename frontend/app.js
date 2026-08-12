@@ -177,14 +177,14 @@ grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
       <div class="card-body">
         <div class="card-cat">${catLabel(p.cat)}</div>
         <div class="card-title" style="cursor:pointer;" onclick="location.href='product.html?id=${p.id}'">${p.name}</div>
-        <div class="card-rating"><span class="star">★</span> <b>${p.rating}</b> <span style="color:var(--text-muted);">(${p.reviews.toLocaleString()}) · ${p.seller}</span></div>
+        <div class="card-rating"><span class="star">★</span> <b>${p.rating}</b> <span style="color:var(--text-muted);">(${p.reviews.toLocaleString()}) · ${(lowestSeller(p)?.name) || p.seller}</span></div>
         <div class="card-foot">
   <div>
   <span class="price-now">
     ${money(bestSellerPrice(p), bestSellerCurrency(p))}
   </span>
   <span class="price-was">${money(p.was, p.currency)}</span>
-  <div class="store-badge">via ${p.seller}</div>
+  <div class="store-badge">via ${(lowestSeller(p)?.name) || p.seller}</div>
 </div>
   <label class="compare-check">
     <input type="checkbox" ${compareSet.has(p.id)?'checked':''} onchange="toggleCompare('${p.id}')"> Compare
@@ -310,7 +310,7 @@ document.getElementById('searchInput').addEventListener('input', e => {
   searchDebounce = setTimeout(async () => {
     if (searchTerm.trim() === "") { render(products); return; }
     try {
-      const res = await fetch(`http://localhost:5000/api/search?q=${encodeURIComponent(searchTerm)}`);
+      const res = await fetch(`https://ShopNexa-backend.onrender.com/api/search?q=${encodeURIComponent(searchTerm)}`);
       const data = await res.json();
       const mapped = data.products.map(p => {
   // Backend "offers" ({store, price, url}) ko standard "sellerList" mein map karo
@@ -320,16 +320,16 @@ document.getElementById('searchInput').addEventListener('input', e => {
     affiliateLink: o.url || o.affiliateLink || '#'
   }));
 
-  // Lowest price calculate karo agar offers available hain
-  const lowestPrice = sellerList.length > 0 
-    ? Math.min(...sellerList.map(s => s.price)) 
-    : p.price;
+  // Lowest price wala seller nikaalo (price + naam dono ke liye)
+  const lowestSeller = sellerList.length > 0
+    ? sellerList.reduce((lowest, s) => s.price < lowest.price ? s : lowest)
+    : null;
 
   return {
     id: p._id,
     name: p.name,
     cat: p.category,
-    price: lowestPrice, // Auto pick lowest price
+    price: lowestSeller ? lowestSeller.price : p.price, // Auto pick lowest price
     was: p.was ?? p.price,
     currency: p.currency || 'INR',
     rating: p.rating ?? 0,
@@ -338,7 +338,7 @@ document.getElementById('searchInput').addEventListener('input', e => {
     glyph: p.glyph || '🛒',
     grad: p.grad || '#1a1d29, #2a2f42',
     sellerList: sellerList,
-    seller: sellerList[0]?.name || 'Multiple sellers',
+    seller: lowestSeller?.name || 'Multiple sellers',
     specs: p.specs || {}
   };
 });
