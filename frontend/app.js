@@ -445,15 +445,12 @@ async function initApp() {
   `).join('');
 
   try {
-    products = await loadCatalog();
+    [products, wishlist] = await Promise.all([loadCatalog(), loadWish()]);
   } catch (err) {
     console.error('Failed to load catalog:', err);
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">Couldn't load products. Please try again later.</div>`;
     return;
   }
-
-  wishlist = await loadWish();
-
   const wc = document.getElementById('wishCount');
   wc.textContent = wishlist.size;
   wc.style.display = wishlist.size ? 'flex' : 'none';

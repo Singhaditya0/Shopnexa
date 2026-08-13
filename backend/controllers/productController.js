@@ -11,12 +11,12 @@ exports.getProducts = async (req, res) => {
       if (minPrice) filter.price.$gte = Number(minPrice);
       if (maxPrice) filter.price.$lte = Number(maxPrice);
     }
-    let query = Product.find(filter);
+    let query = Product.find(filter).lean();   // ← .lean() add kiya, faster serialization
     if (sort === "low") query = query.sort({ price: 1 });
     else if (sort === "high") query = query.sort({ price: -1 });
     else query = query.sort({ createdAt: -1 });
     const products = await query;
-    res.json({ success: true, data: products, products });
+    res.json({ success: true, products });   // ← duplicate "data" field hataya (payload half ho gaya)
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
