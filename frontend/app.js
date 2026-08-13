@@ -459,7 +459,8 @@ async function initApp() {
   wc.style.display = wishlist.size ? 'flex' : 'none';
 
   renderSidebar();
-  detectCurrency();
+  render(products);       // ← products turant dikhao (fallback currency ke sath)
+  detectCurrency();       // ← live rates background mein aayein, tab silently update ho jayenge
 }
 
 initApp();
