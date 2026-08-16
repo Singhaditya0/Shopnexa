@@ -6,4 +6,4 @@ Allow: /
 # Googlebot see a broken, unstyled page and could hurt ranking. Removed.
 
 # Sitemap location
-Sitemap: https://www.yourdomain.com/sitemap.xml
+Sitemap: https://shopnexaco.com/sitemap.xml
