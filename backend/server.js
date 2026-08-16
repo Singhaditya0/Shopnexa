@@ -17,6 +17,10 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Shopnexa backend is running ✅");
+});
+
 app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/alerts", alertRoutes);
