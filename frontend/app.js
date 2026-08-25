@@ -1,6 +1,4 @@
-/* Wishlist now persists in localStorage (same 'sc_wish' key used on
-   product.html) so items added on the homepage stay wishlisted when you
-   navigate to a product page, and vice versa. */
+
 async function loadWish() {
   const token = getToken();
   if (!token) return new Set(JSON.parse(localStorage.getItem('sc_wish') || '[]'));
@@ -14,11 +12,11 @@ async function loadWish() {
   }
 }
 
-async function toggleWishBackend(id) {
+async function toggleWishBackend(id, isAdding) {
   const token = getToken();
   if (!token) { window.location.href = "login.html"; return; }
 
-  const method = wishlist.has(id) ? "DELETE" : "POST";
+  const method = isAdding ? "POST" : "DELETE";
   await fetch(`https://shopnexa-khaki.vercel.app/api/wishlist/${id}`, { method, headers: authHeader() });
 }
 let wishlist = new Set();
@@ -230,12 +228,13 @@ function catLabel(key){
 }
 
 async function toggleWish(id){
-  wishlist.has(id) ? wishlist.delete(id) : wishlist.add(id);
+  const isAdding = !wishlist.has(id);
+  isAdding ? wishlist.add(id) : wishlist.delete(id);
   const wc = document.getElementById('wishCount');
   wc.textContent = wishlist.size;
   wc.style.display = wishlist.size ? 'flex' : 'none';
   render(products);
-  await toggleWishBackend(id); // backend ko bhi update karo
+  await toggleWishBackend(id, isAdding); // backend ko bhi update karo
 }
 
 function toggleCompare(id){

@@ -132,7 +132,7 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   document.getElementById('themeToggle').textContent = isLight ? '☀️' : '🌙';
   localStorage.setItem('sc_theme', isLight ? 'light' : 'dark');
 });
-if (localStorage.getItem('sc_theme') === 'light') {
+if (localStorage.getItem('sc_theme') !== 'dark') {
   document.documentElement.classList.add('light');
   document.getElementById('themeToggle').textContent = '☀️';
 }
