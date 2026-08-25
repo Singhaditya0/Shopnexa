@@ -40,7 +40,11 @@ export async function loadCatalog() {
         rating: p.rating ?? 0,
         reviews: p.reviews ?? 0,
         tag: p.tag || (p.isFeatured ? 'Featured' : ''),
-        glyph: p.glyph || '🛒',
+        // Only fall back to a glyph when there is truly no product photo —
+        // and use a neutral "no image" indicator instead of a generic cart
+        // icon, so real photos are never masked and the fallback doesn't
+        // look like a shared placeholder across every card.
+        glyph: (!p.image && !(p.images && p.images[0])) ? (p.glyph || '🖼️') : '',
         grad: p.grad || '#1a1d29, #2a2f42',
         isFeatured: p.isFeatured || false
       };

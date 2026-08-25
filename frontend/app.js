@@ -187,7 +187,7 @@ grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
   <div class="store-badge">via ${(lowestSeller(p)?.name) || p.seller}</div>
 </div>
   <label class="compare-check">
-    <input type="checkbox" ${compareSet.has(p.id)?'checked':''} onchange="toggleCompare('${p.id}')"> Compare
+    <input type="checkbox" ${compareSet.has(p.id)?'checked':''} onchange="toggleCompare('${p.id}')" aria-label="Add ${p.name} to compare"> Compare
   </label>
 </div>
 ${sellerTickerHTML(p)}
@@ -448,7 +448,11 @@ async function initApp() {
     [products, wishlist] = await Promise.all([loadCatalog(), loadWish()]);
   } catch (err) {
     console.error('Failed to load catalog:', err);
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">Couldn't load products. Please try again later.</div>`;
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
+      <div class="e-glyph">⚠️</div>
+      Couldn't load products right now.<br>
+      <button class="btn btn-ghost" style="margin-top:12px;" onclick="location.reload()">Retry</button>
+    </div>`;
     return;
   }
   const wc = document.getElementById('wishCount');
