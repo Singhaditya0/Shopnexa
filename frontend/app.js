@@ -6,7 +6,7 @@ async function loadWish() {
   if (!token) return new Set(JSON.parse(localStorage.getItem('sc_wish') || '[]'));
 
   try {
-    const res = await fetch("https://ShopNexa-backend.onrender.com/api/wishlist", { headers: authHeader() });
+    const res = await fetch("https://shopnexa-khaki.vercel.app/api/wishlist", { headers: authHeader() });
     const data = await res.json();
     return new Set(data.wishlist.map(p => p._id));
   } catch {
@@ -19,7 +19,7 @@ async function toggleWishBackend(id) {
   if (!token) { window.location.href = "login.html"; return; }
 
   const method = wishlist.has(id) ? "DELETE" : "POST";
-  await fetch(`https://ShopNexa-backend.onrender.com/api/wishlist/${id}`, { method, headers: authHeader() });
+  await fetch(`https://shopnexa-khaki.vercel.app/api/wishlist/${id}`, { method, headers: authHeader() });
 }
 let wishlist = new Set();
 let compareSet = new Set();
@@ -310,7 +310,7 @@ document.getElementById('searchInput').addEventListener('input', e => {
   searchDebounce = setTimeout(async () => {
     if (searchTerm.trim() === "") { render(products); return; }
     try {
-      const res = await fetch(`https://ShopNexa-backend.onrender.com/api/search?q=${encodeURIComponent(searchTerm)}`);
+      const res = await fetch(`https://shopnexa-khaki.vercel.app/api/search?q=${encodeURIComponent(searchTerm)}`);
       const data = await res.json();
       const mapped = data.products.map(p => {
   // Backend "offers" ({store, price, url}) ko standard "sellerList" mein map karo

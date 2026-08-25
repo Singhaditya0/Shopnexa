@@ -17,6 +17,25 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
+// Serverless-safe MongoDB connection: reuse the connection across
+// invocations of the same warm function instead of reconnecting every time.
+let isConnected = false;
+async function connectDB() {
+  if (isConnected || mongoose.connection.readyState === 1) return;
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    isConnected = true;
+    console.log("MongoDB connected");
+  } catch (err) {
+    console.log("MongoDB error:", err);
+  }
+}
+// Ensure a connection exists BEFORE any route handler runs
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
+
 app.get("/", (req, res) => {
   res.send("Shopnexa backend is running ✅");
 });
@@ -31,25 +50,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/redirect", redirectRoutes);
-
-// Serverless-safe MongoDB connection: reuse the connection across
-// invocations of the same warm function instead of reconnecting every time.
-let isConnected = false;
-async function connectDB() {
-  if (isConnected || mongoose.connection.readyState === 1) return;
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    isConnected = true;
-    console.log("MongoDB connected");
-  } catch (err) {
-    console.log("MongoDB error:", err);
-  }
-}
-// Ensure a connection exists before handling any request
-app.use(async (req, res, next) => {
-  await connectDB();
-  next();
-});
 
 // Global error handler
 app.use((err, req, res, next) => {

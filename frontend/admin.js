@@ -1,4 +1,4 @@
-const API = "https://ShopNexa-backend.onrender.com/api";
+const API = "https://shopnexa-khaki.vercel.app/api";
 if (!getToken()) {
   alert("Please login as admin first");
   window.location.href = "login.html";

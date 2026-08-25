@@ -520,7 +520,7 @@
 <script src="currency.js"></script>
 <script src="toast.js"></script>
 <script type="module">
-  const API = "https://ShopNexa-backend.onrender.com/api";
+  const API = "https://shopnexa-khaki.vercel.app/api";
 
 async function loadReviews() {
   const res = await fetch(`${API}/products/${currentProductId}/reviews`);
@@ -679,7 +679,7 @@ async function toggleWish() {
   }
   updateWishBadge();
 
-  await fetch(`https://ShopNexa-backend.onrender.com/api/wishlist/${currentProductId}`, { method, headers: authHeader() });
+  await fetch(`https://shopnexa-khaki.vercel.app/api/wishlist/${currentProductId}`, { method, headers: authHeader() });
 }
 window.toggleWish = toggleWish;
 function updateWishBadge() {
@@ -850,7 +850,7 @@ async function init() {
   await initCurrency();
   if (getToken()) {
   try {
-    const res = await fetch("https://ShopNexa-backend.onrender.com/api/wishlist", { headers: authHeader() });
+    const res = await fetch("https://shopnexa-khaki.vercel.app/api/wishlist", { headers: authHeader() });
     const data = await res.json();
     if (data.success) {
       wishlist = new Set(data.data.map(p => p._id));
